@@ -1,0 +1,101 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
+using APIPTV.Filters;
+using APIPTV.Models;
+using Newtonsoft.Json;
+using NLog;
+using static APIPTV.Models.FluxAOptimiser;
+
+namespace APIPTV.Controllers
+{
+    [BasicAuthentication]
+    [System.Web.Mvc.RequireHttps]
+    public class EmissionAPTVController : ApiController
+    {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+        // GET: api/EmissionAPTV
+        public IEnumerable<string> Get()
+        {
+            return new string[] { "value1", "value2" };
+        }
+
+        // GET: api/EmissionAPTV/5
+        // GET api/values/5
+        public string Get(int codeAgence)
+        {
+            //157816 VIR96 - 169867    T01 Pickup  960008703 - 181231    2019 - 01 - 03T16: 12:54 + 01:00   2019 - 01 - 03T16: 12:54 + 01:00   0
+          Retour r = UTILS.EmissionFluxPTV.GetData(codeAgence);
+            JsonSerializer ser = new JsonSerializer();
+            string jsonresp = JsonConvert.SerializeObject(r);
+            return jsonresp;
+        }
+
+        // POST: api/EmissionAPTV
+        [HttpPost]
+        public async Task<IHttpActionResult> Post([FromBody]dynamic JsonPTV)
+        {
+            new Task((Action)(async () =>
+            {
+                try
+                {
+                    logger.Error("==================================================First==================================");
+                    var FluxAOPT = JsonConvert.DeserializeObject<List<FluxPtv>>(JsonPTV.Root.ToString());
+
+                   
+                    logger.Info(string.Format("{0} => {1}", "json mrod", JsonPTV.Root.ToString()));
+
+
+                    var FluxRdvEmission = await UTILS.EmissionFluxPTV.TraitFluxSmartour(FluxAOPT);
+
+                    
+              
+
+                      
+                    try
+                    {
+                        // mon code qui plante
+                        UTILS.EmissionFluxPTV.InsertOrUpdate(FluxRdvEmission);
+                        logger.Error("NO EXCEPTION ====================================================================================");
+                    }
+                    catch (DbEntityValidationException e)
+                    {
+                        foreach (var eve in e.EntityValidationErrors)
+                        {
+                          
+                            foreach (var ve in eve.ValidationErrors)
+                            {
+                                System.Diagnostics.Debug.WriteLine(string.Format("Property : {0} Error : {1}", ve.PropertyName, ve.ErrorMessage));
+                            }
+                        }
+                    }
+                }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                logger.Error("END WITH EXCEPTION ====================================================================================");
+
+            }
+
+            })).Start();
+            return (IHttpActionResult)Ok();
+
+
+        }
+
+        // PUT: api/EmissionAPTV/5
+        public void Put(int id, [FromBody]string value)
+        {
+        }
+
+        // DELETE: api/EmissionAPTV/5
+        public void Delete(int id)
+        {
+        }
+    }
+}

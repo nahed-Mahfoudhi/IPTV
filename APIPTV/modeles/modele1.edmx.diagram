@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="97518e5a65b7470bb7e7337b17f44fd4" Name="Diagram1" ZoomLevel="52">
+        <EntityTypeShape EntityType="TRANSFERDB_TESTModel.IAPO_ACTIONPOINT_OPENINGHOUR" Width="1.5" PointX="15.625" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TRANSFERDB_TESTModel.IMPH_IMPORT_HEADER" Width="1.5" PointX="4.375" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TRANSFERDB_TESTModel.IORA_ORDER_ACTIONPOINT" Width="1.5" PointX="7.5" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="TRANSFERDB_TESTModel.IORH_ORDER_HEADER" Width="1.5" PointX="13.625" PointY="10.375" IsExpanded="true" />
+        <AssociationConnector Association="TRANSFERDB_TESTModel.FK_IAPO_IMPH_REFERENCE" ManuallyRouted="false" />
+        <AssociationConnector Association="TRANSFERDB_TESTModel.FK_IORA_IMPH_REFERENCE" ManuallyRouted="false" />
+        <AssociationConnector Association="TRANSFERDB_TESTModel.FK_IORH_IMPH_REFERENCE" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,17 @@
+﻿truncate  table  dbo.IORA_ORDER_ACTIONPOINT ; --IMPH_IMPORT_HEADER  IAPO_ACTIONPOINT_OPENINGHOUR IORA_ORDER_ACTIONPOINT IORH_ORDER_HEADER
+
+select * from  dbo.IAPO_ACTIONPOINT_OPENINGHOUR  ; 
+
+select * from  dbo.IORH_ORDER_HEADER  ; 
+select * from  dbo.IMPH_IMPORT_HEADER  ; 
+select * from  dbo.IORA_ORDER_ACTIONPOINT  ; 
+
+
+delete   from  dbo.IAPO_ACTIONPOINT_OPENINGHOUR  ; 
+delete   from  dbo.IORH_ORDER_HEADER  ; 
+delete   from   dbo.IMPH_IMPORT_HEADER  ; 
+delete   from   dbo.IORA_ORDER_ACTIONPOINT  ; 
+
+'dbo.IORA_ORDER_ACTIONPOINT'. 
+
+--IORA_ORDER_ACTIONPOINT

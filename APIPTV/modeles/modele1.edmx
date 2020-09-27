@@ -1,0 +1,575 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TRANSFERDB_TESTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="IAPO_ACTIONPOINT_OPENINGHOUR">
+          <Key>
+            <PropertyRef Name="IAPO_IORA_IMPH_REFERENCE" />
+            <PropertyRef Name="IAPO_IORA_ACTION" />
+            <PropertyRef Name="IAPO_SEQU_NUMBER" />
+          </Key>
+          <Property Name="IAPO_IORA_IMPH_REFERENCE" Type="numeric" Precision="9" Scale="0" Nullable="false" />
+          <Property Name="IAPO_IORA_ACTION" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IAPO_SEQU_NUMBER" Type="int" Nullable="false" />
+          <Property Name="IAPO_FROM_WEEKDAY" Type="varchar" MaxLength="3" />
+          <Property Name="IAPO_UNTIL_WEEKDAY" Type="varchar" MaxLength="3" />
+          <Property Name="IAPO_FROM" Type="varchar" MaxLength="4" />
+          <Property Name="IAPO_UNTIL" Type="varchar" MaxLength="4" />
+        </EntityType>
+        <EntityType Name="IMPH_IMPORT_HEADER">
+          <Key>
+            <PropertyRef Name="IMPH_REFERENCE" />
+          </Key>
+          <Property Name="IMPH_REFERENCE" Type="numeric" Precision="9" Scale="0" Nullable="false" />
+          <Property Name="IMPH_CONTEXT" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="IMPH_OBJECT_TYPE" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IMPH_ACTION_CODE" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="IMPH_EXTID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IMPH_PROCESS_CODE" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="IMPH_CREATION_TIME" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="IMPH_PROCESS_TIME" Type="varchar" MaxLength="32" />
+          <Property Name="IMPH_PROCESS_RETRIES" Type="numeric" Precision="4" Scale="0" />
+          <Property Name="IMPH_DESCRIPTION" Type="nvarchar" MaxLength="4000" />
+        </EntityType>
+        <EntityType Name="IORA_ORDER_ACTIONPOINT">
+          <Key>
+            <PropertyRef Name="IORA_IMPH_REFERENCE" />
+            <PropertyRef Name="IORA_ACTION" />
+          </Key>
+          <Property Name="IORA_IMPH_REFERENCE" Type="numeric" Precision="9" Scale="0" Nullable="false" />
+          <Property Name="IORA_ACTION" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IORA_EXTID1" Type="nvarchar" MaxLength="50" />
+          <Property Name="IORA_EXTID2" Type="nvarchar" MaxLength="50" />
+          <Property Name="IORA_IS_ONETIME" Type="tinyint" Nullable="false" />
+          <Property Name="IORA_NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="IORA_DESC" Type="nvarchar" MaxLength="255" />
+          <Property Name="IORA_SHORTDESC" Type="nvarchar" MaxLength="30" />
+          <Property Name="IORA_COUNTRY" Type="nvarchar" MaxLength="3" />
+          <Property Name="IORA_STATE" Type="nvarchar" MaxLength="100" />
+          <Property Name="IORA_POSTCODE" Type="nvarchar" MaxLength="12" />
+          <Property Name="IORA_CITY" Type="nvarchar" MaxLength="100" />
+          <Property Name="IORA_DISTRICT" Type="nvarchar" MaxLength="80" />
+          <Property Name="IORA_STREET" Type="nvarchar" MaxLength="100" />
+          <Property Name="IORA_HOUSENO" Type="nvarchar" MaxLength="10" />
+          <Property Name="IORA_LATITUDE" Type="float" />
+          <Property Name="IORA_LONGITUDE" Type="float" />
+          <Property Name="IORA_COORD_TYPE" Type="varchar" MaxLength="20" />
+          <Property Name="IORA_EARLIEST_DATETIME" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="IORA_LATEST_DATETIME" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="IORA_SERVICEPERIODEXTERNAL" Type="int" />
+          <Property Name="IORA_OH_TOLERANCE_CLASS" Type="smallint" />
+          <Property Name="IORA_HANDLINGTIME_CLASS" Type="int" />
+          <Property Name="IORA_HANDLINGTIME_ADDITIONAL" Type="int" />
+          <Property Name="IORA_PRECOMBINED_TOUR_SEQUENCE" Type="int" />
+          <Property Name="IORA_TOUR_POS" Type="varchar" MaxLength="20" />
+          <Property Name="IORA_SERVICE_IN_INTERVAL" Type="tinyint" />
+          <Property Name="IORA_CUSTOMER_INDICATOR" Type="int" />
+          <Property Name="IORA_CUSTOMER_GROUP" Type="int" />
+          <Property Name="IORA_NOTRAILER" Type="tinyint" Nullable="false" />
+          <Property Name="IORA_CODRIVER_NEEDED" Type="tinyint" Nullable="false" />
+          <Property Name="IORA_VEHICLEREQUIREMENTS" Type="nvarchar" MaxLength="255" />
+          <Property Name="IORA_MIN_VEHICLE_GROUP" Type="numeric" Precision="2" Scale="0" />
+          <Property Name="IORA_MAX_VEHICLE_GROUP" Type="numeric" Precision="2" Scale="0" />
+          <Property Name="IORA_ADDITIONAL_VEHICLE_GROUP" Type="nvarchar" MaxLength="255" />
+          <Property Name="IORA_PHONE" Type="nvarchar" MaxLength="50" />
+          <Property Name="IORA_EMAIL" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="IORH_ORDER_HEADER">
+          <Key>
+            <PropertyRef Name="IORH_IMPH_REFERENCE" />
+          </Key>
+          <Property Name="IORH_IMPH_REFERENCE" Type="numeric" Precision="9" Scale="0" Nullable="false" />
+          <Property Name="IORH_ORDER_TYPE" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IORH_EXTID2" Type="nvarchar" MaxLength="50" />
+          <Property Name="IORH_CUSTOMER_ORDER_EXTID" Type="nvarchar" MaxLength="50" />
+          <Property Name="IORH_NOTE" Type="nvarchar" MaxLength="255" />
+          <Property Name="IORH_ASSORTMENT" Type="nvarchar" MaxLength="50" />
+          <Property Name="IORH_CUSTOMER" Type="nvarchar" MaxLength="50" />
+          <Property Name="IORH_CONSIGNMENT_EXTID" Type="nvarchar" MaxLength="50" />
+          <Property Name="IORH_LOGISTIC_EXTID" Type="nvarchar" MaxLength="50" />
+          <Property Name="IORH_PRECOMBINED_TOUR" Type="nvarchar" MaxLength="255" />
+          <Property Name="IORH_PREASSIGNED_TRUCK" Type="nvarchar" MaxLength="50" />
+          <Property Name="IORH_VEHICLEREQUIREMENTS" Type="nvarchar" MaxLength="255" />
+          <Property Name="IORH_PRIORITY" Type="int" />
+          <Property Name="IORH_CODRIVER_NEEDED" Type="tinyint" Nullable="false" />
+          <Property Name="IORH_TRANSPORTPERIOD" Type="int" />
+          <Property Name="IORH_SOLO" Type="tinyint" Nullable="false" />
+          <Property Name="IORH_WEIGHT" Type="float" />
+          <Property Name="IORH_VOLUME" Type="float" />
+          <Property Name="IORH_LOADMETER" Type="float" />
+          <Property Name="IORH_QUANTITY_1" Type="float" />
+          <Property Name="IORH_QUANTITY_2" Type="float" />
+          <Property Name="IORH_QUANTITY_3" Type="float" />
+          <Property Name="IORH_QUANTITY_4" Type="float" />
+          <Property Name="IORH_QUANTITY_5" Type="float" />
+          <Property Name="IORH_QUANTITY_6" Type="float" />
+          <Property Name="IORH_QUANTITY_7" Type="float" />
+          <Property Name="IORH_LENGTH" Type="float" />
+          <Property Name="IORH_WIDTH" Type="float" />
+          <Property Name="IORH_HEIGHT" Type="float" />
+          <Property Name="IORH_NUM_1" Type="float" />
+          <Property Name="IORH_NUM_2" Type="float" />
+          <Property Name="IORH_NUM_3" Type="float" />
+          <Property Name="IORH_NUM_4" Type="float" />
+          <Property Name="IORH_NUM_5" Type="float" />
+          <Property Name="IORH_NUM_6" Type="float" />
+          <Property Name="IORH_NUM_7" Type="float" />
+          <Property Name="IORH_NUM_8" Type="float" />
+          <Property Name="IORH_NUM_9" Type="float" />
+          <Property Name="IORH_NUM_10" Type="float" />
+          <Property Name="IORH_TEXT_1" Type="nvarchar" MaxLength="255" />
+          <Property Name="IORH_TEXT_2" Type="nvarchar" MaxLength="255" />
+          <Property Name="IORH_TEXT_3" Type="nvarchar" MaxLength="255" />
+          <Property Name="IORH_TEXT_4" Type="nvarchar" MaxLength="255" />
+          <Property Name="IORH_TEXT_5" Type="nvarchar" MaxLength="255" />
+          <Property Name="IORH_TEXT_6" Type="nvarchar" MaxLength="255" />
+          <Property Name="IORH_TEXT_7" Type="nvarchar" MaxLength="255" />
+          <Property Name="IORH_TEXT_8" Type="nvarchar" MaxLength="255" />
+          <Property Name="IORH_TEXT_9" Type="nvarchar" MaxLength="255" />
+          <Property Name="IORH_TEXT_10" Type="nvarchar" MaxLength="255" />
+          <Property Name="IORH_TASKFIELDS" Type="nvarchar" MaxLength="255" />
+          <Property Name="IORH_ALTERNATIVE_DEPOTS" Type="nvarchar" MaxLength="255" />
+          <Property Name="IORH_PICKUP_EXTID1" Type="nvarchar" MaxLength="50" />
+          <Property Name="IORH_PICKUP_EARLIEST_DATETIME" Type="varchar" MaxLength="32" />
+          <Property Name="IORH_PICKUP_LATEST_DATETIME" Type="varchar" MaxLength="32" />
+          <Property Name="IORH_DELVRY_EXTID1" Type="nvarchar" MaxLength="50" />
+          <Property Name="IORH_DELVRY_EARLIEST_DATETIME" Type="varchar" MaxLength="32" />
+          <Property Name="IORH_DELVRY_LATEST_DATETIME" Type="varchar" MaxLength="32" />
+        </EntityType>
+        <Association Name="FK_IAPO_IMPH_REFERENCE">
+          <End Role="IORA_ORDER_ACTIONPOINT" Type="Self.IORA_ORDER_ACTIONPOINT" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="IAPO_ACTIONPOINT_OPENINGHOUR" Type="Self.IAPO_ACTIONPOINT_OPENINGHOUR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IORA_ORDER_ACTIONPOINT">
+              <PropertyRef Name="IORA_IMPH_REFERENCE" />
+              <PropertyRef Name="IORA_ACTION" />
+            </Principal>
+            <Dependent Role="IAPO_ACTIONPOINT_OPENINGHOUR">
+              <PropertyRef Name="IAPO_IORA_IMPH_REFERENCE" />
+              <PropertyRef Name="IAPO_IORA_ACTION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IORA_IMPH_REFERENCE">
+          <End Role="IMPH_IMPORT_HEADER" Type="Self.IMPH_IMPORT_HEADER" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="IORA_ORDER_ACTIONPOINT" Type="Self.IORA_ORDER_ACTIONPOINT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IMPH_IMPORT_HEADER">
+              <PropertyRef Name="IMPH_REFERENCE" />
+            </Principal>
+            <Dependent Role="IORA_ORDER_ACTIONPOINT">
+              <PropertyRef Name="IORA_IMPH_REFERENCE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IORH_IMPH_REFERENCE">
+          <End Role="IMPH_IMPORT_HEADER" Type="Self.IMPH_IMPORT_HEADER" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="IORH_ORDER_HEADER" Type="Self.IORH_ORDER_HEADER" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="IMPH_IMPORT_HEADER">
+              <PropertyRef Name="IMPH_REFERENCE" />
+            </Principal>
+            <Dependent Role="IORH_ORDER_HEADER">
+              <PropertyRef Name="IORH_IMPH_REFERENCE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TRANSFERDB_TESTModelStoreContainer">
+          <EntitySet Name="IAPO_ACTIONPOINT_OPENINGHOUR" EntityType="Self.IAPO_ACTIONPOINT_OPENINGHOUR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMPH_IMPORT_HEADER" EntityType="Self.IMPH_IMPORT_HEADER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IORA_ORDER_ACTIONPOINT" EntityType="Self.IORA_ORDER_ACTIONPOINT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IORH_ORDER_HEADER" EntityType="Self.IORH_ORDER_HEADER" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_IAPO_IMPH_REFERENCE" Association="Self.FK_IAPO_IMPH_REFERENCE">
+            <End Role="IORA_ORDER_ACTIONPOINT" EntitySet="IORA_ORDER_ACTIONPOINT" />
+            <End Role="IAPO_ACTIONPOINT_OPENINGHOUR" EntitySet="IAPO_ACTIONPOINT_OPENINGHOUR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IORA_IMPH_REFERENCE" Association="Self.FK_IORA_IMPH_REFERENCE">
+            <End Role="IMPH_IMPORT_HEADER" EntitySet="IMPH_IMPORT_HEADER" />
+            <End Role="IORA_ORDER_ACTIONPOINT" EntitySet="IORA_ORDER_ACTIONPOINT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IORH_IMPH_REFERENCE" Association="Self.FK_IORH_IMPH_REFERENCE">
+            <End Role="IMPH_IMPORT_HEADER" EntitySet="IMPH_IMPORT_HEADER" />
+            <End Role="IORH_ORDER_HEADER" EntitySet="IORH_ORDER_HEADER" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TRANSFERDB_TESTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="IAPO_ACTIONPOINT_OPENINGHOUR">
+          <Key>
+            <PropertyRef Name="IAPO_IORA_IMPH_REFERENCE" />
+            <PropertyRef Name="IAPO_IORA_ACTION" />
+            <PropertyRef Name="IAPO_SEQU_NUMBER" />
+          </Key>
+          <Property Name="IAPO_IORA_IMPH_REFERENCE" Type="Decimal" Precision="9" Scale="0" Nullable="false" />
+          <Property Name="IAPO_IORA_ACTION" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IAPO_SEQU_NUMBER" Type="Int32" Nullable="false" />
+          <Property Name="IAPO_FROM_WEEKDAY" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IAPO_UNTIL_WEEKDAY" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IAPO_FROM" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="IAPO_UNTIL" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="IORA_ORDER_ACTIONPOINT" Relationship="Self.FK_IAPO_IMPH_REFERENCE" FromRole="IAPO_ACTIONPOINT_OPENINGHOUR" ToRole="IORA_ORDER_ACTIONPOINT" />
+        </EntityType>
+        <EntityType Name="IMPH_IMPORT_HEADER">
+          <Key>
+            <PropertyRef Name="IMPH_REFERENCE" />
+          </Key>
+          <Property Name="IMPH_REFERENCE" Type="Decimal" Precision="9" Scale="0" Nullable="false" />
+          <Property Name="IMPH_CONTEXT" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IMPH_OBJECT_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IMPH_ACTION_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IMPH_EXTID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IMPH_PROCESS_CODE" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="IMPH_CREATION_TIME" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IMPH_PROCESS_TIME" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="IMPH_PROCESS_RETRIES" Type="Decimal" Precision="4" Scale="0" />
+          <Property Name="IMPH_DESCRIPTION" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="IORA_ORDER_ACTIONPOINT" Relationship="Self.FK_IORA_IMPH_REFERENCE" FromRole="IMPH_IMPORT_HEADER" ToRole="IORA_ORDER_ACTIONPOINT" />
+          <NavigationProperty Name="IORH_ORDER_HEADER" Relationship="Self.FK_IORH_IMPH_REFERENCE" FromRole="IMPH_IMPORT_HEADER" ToRole="IORH_ORDER_HEADER" />
+        </EntityType>
+        <EntityType Name="IORA_ORDER_ACTIONPOINT">
+          <Key>
+            <PropertyRef Name="IORA_IMPH_REFERENCE" />
+            <PropertyRef Name="IORA_ACTION" />
+          </Key>
+          <Property Name="IORA_IMPH_REFERENCE" Type="Decimal" Precision="9" Scale="0" Nullable="false" />
+          <Property Name="IORA_ACTION" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IORA_EXTID1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IORA_EXTID2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IORA_IS_ONETIME" Type="Byte" Nullable="false" />
+          <Property Name="IORA_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IORA_DESC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IORA_SHORTDESC" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="IORA_COUNTRY" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="IORA_STATE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IORA_POSTCODE" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="IORA_CITY" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IORA_DISTRICT" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="IORA_STREET" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IORA_HOUSENO" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="IORA_LATITUDE" Type="Double" />
+          <Property Name="IORA_LONGITUDE" Type="Double" />
+          <Property Name="IORA_COORD_TYPE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IORA_EARLIEST_DATETIME" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IORA_LATEST_DATETIME" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IORA_SERVICEPERIODEXTERNAL" Type="Int32" />
+          <Property Name="IORA_OH_TOLERANCE_CLASS" Type="Int16" />
+          <Property Name="IORA_HANDLINGTIME_CLASS" Type="Int32" />
+          <Property Name="IORA_HANDLINGTIME_ADDITIONAL" Type="Int32" />
+          <Property Name="IORA_PRECOMBINED_TOUR_SEQUENCE" Type="Int32" />
+          <Property Name="IORA_TOUR_POS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IORA_SERVICE_IN_INTERVAL" Type="Byte" />
+          <Property Name="IORA_CUSTOMER_INDICATOR" Type="Int32" />
+          <Property Name="IORA_CUSTOMER_GROUP" Type="Int32" />
+          <Property Name="IORA_NOTRAILER" Type="Byte" Nullable="false" />
+          <Property Name="IORA_CODRIVER_NEEDED" Type="Byte" Nullable="false" />
+          <Property Name="IORA_VEHICLEREQUIREMENTS" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IORA_MIN_VEHICLE_GROUP" Type="Decimal" Precision="2" Scale="0" />
+          <Property Name="IORA_MAX_VEHICLE_GROUP" Type="Decimal" Precision="2" Scale="0" />
+          <Property Name="IORA_ADDITIONAL_VEHICLE_GROUP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IORA_PHONE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IORA_EMAIL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="IAPO_ACTIONPOINT_OPENINGHOUR" Relationship="Self.FK_IAPO_IMPH_REFERENCE" FromRole="IORA_ORDER_ACTIONPOINT" ToRole="IAPO_ACTIONPOINT_OPENINGHOUR" />
+          <NavigationProperty Name="IMPH_IMPORT_HEADER" Relationship="Self.FK_IORA_IMPH_REFERENCE" FromRole="IORA_ORDER_ACTIONPOINT" ToRole="IMPH_IMPORT_HEADER" />
+        </EntityType>
+        <EntityType Name="IORH_ORDER_HEADER">
+          <Key>
+            <PropertyRef Name="IORH_IMPH_REFERENCE" />
+          </Key>
+          <Property Name="IORH_IMPH_REFERENCE" Type="Decimal" Precision="9" Scale="0" Nullable="false" />
+          <Property Name="IORH_ORDER_TYPE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IORH_EXTID2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_CUSTOMER_ORDER_EXTID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_NOTE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_ASSORTMENT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_CUSTOMER" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_CONSIGNMENT_EXTID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_LOGISTIC_EXTID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_PRECOMBINED_TOUR" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_PREASSIGNED_TRUCK" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_VEHICLEREQUIREMENTS" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_PRIORITY" Type="Int32" />
+          <Property Name="IORH_CODRIVER_NEEDED" Type="Byte" Nullable="false" />
+          <Property Name="IORH_TRANSPORTPERIOD" Type="Int32" />
+          <Property Name="IORH_SOLO" Type="Byte" Nullable="false" />
+          <Property Name="IORH_WEIGHT" Type="Double" />
+          <Property Name="IORH_VOLUME" Type="Double" />
+          <Property Name="IORH_LOADMETER" Type="Double" />
+          <Property Name="IORH_QUANTITY_1" Type="Double" />
+          <Property Name="IORH_QUANTITY_2" Type="Double" />
+          <Property Name="IORH_QUANTITY_3" Type="Double" />
+          <Property Name="IORH_QUANTITY_4" Type="Double" />
+          <Property Name="IORH_QUANTITY_5" Type="Double" />
+          <Property Name="IORH_QUANTITY_6" Type="Double" />
+          <Property Name="IORH_QUANTITY_7" Type="Double" />
+          <Property Name="IORH_LENGTH" Type="Double" />
+          <Property Name="IORH_WIDTH" Type="Double" />
+          <Property Name="IORH_HEIGHT" Type="Double" />
+          <Property Name="IORH_NUM_1" Type="Double" />
+          <Property Name="IORH_NUM_2" Type="Double" />
+          <Property Name="IORH_NUM_3" Type="Double" />
+          <Property Name="IORH_NUM_4" Type="Double" />
+          <Property Name="IORH_NUM_5" Type="Double" />
+          <Property Name="IORH_NUM_6" Type="Double" />
+          <Property Name="IORH_NUM_7" Type="Double" />
+          <Property Name="IORH_NUM_8" Type="Double" />
+          <Property Name="IORH_NUM_9" Type="Double" />
+          <Property Name="IORH_NUM_10" Type="Double" />
+          <Property Name="IORH_TEXT_1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_TEXT_2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_TEXT_3" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_TEXT_4" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_TEXT_5" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_TEXT_6" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_TEXT_7" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_TEXT_8" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_TEXT_9" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_TEXT_10" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_TASKFIELDS" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_ALTERNATIVE_DEPOTS" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_PICKUP_EXTID1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_PICKUP_EARLIEST_DATETIME" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="IORH_PICKUP_LATEST_DATETIME" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="IORH_DELVRY_EXTID1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IORH_DELVRY_EARLIEST_DATETIME" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="IORH_DELVRY_LATEST_DATETIME" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="IMPH_IMPORT_HEADER" Relationship="Self.FK_IORH_IMPH_REFERENCE" FromRole="IORH_ORDER_HEADER" ToRole="IMPH_IMPORT_HEADER" />
+        </EntityType>
+        <Association Name="FK_IAPO_IMPH_REFERENCE">
+          <End Role="IORA_ORDER_ACTIONPOINT" Type="Self.IORA_ORDER_ACTIONPOINT" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="IAPO_ACTIONPOINT_OPENINGHOUR" Type="Self.IAPO_ACTIONPOINT_OPENINGHOUR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IORA_ORDER_ACTIONPOINT">
+              <PropertyRef Name="IORA_IMPH_REFERENCE" />
+              <PropertyRef Name="IORA_ACTION" />
+            </Principal>
+            <Dependent Role="IAPO_ACTIONPOINT_OPENINGHOUR">
+              <PropertyRef Name="IAPO_IORA_IMPH_REFERENCE" />
+              <PropertyRef Name="IAPO_IORA_ACTION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IORA_IMPH_REFERENCE">
+          <End Role="IMPH_IMPORT_HEADER" Type="Self.IMPH_IMPORT_HEADER" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="IORA_ORDER_ACTIONPOINT" Type="Self.IORA_ORDER_ACTIONPOINT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IMPH_IMPORT_HEADER">
+              <PropertyRef Name="IMPH_REFERENCE" />
+            </Principal>
+            <Dependent Role="IORA_ORDER_ACTIONPOINT">
+              <PropertyRef Name="IORA_IMPH_REFERENCE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IORH_IMPH_REFERENCE">
+          <End Role="IMPH_IMPORT_HEADER" Type="Self.IMPH_IMPORT_HEADER" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="IORH_ORDER_HEADER" Type="Self.IORH_ORDER_HEADER" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="IMPH_IMPORT_HEADER">
+              <PropertyRef Name="IMPH_REFERENCE" />
+            </Principal>
+            <Dependent Role="IORH_ORDER_HEADER">
+              <PropertyRef Name="IORH_IMPH_REFERENCE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TRANSFERDB_TESTEntities3" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="IAPO_ACTIONPOINT_OPENINGHOUR" EntityType="Self.IAPO_ACTIONPOINT_OPENINGHOUR" />
+          <EntitySet Name="IMPH_IMPORT_HEADER" EntityType="Self.IMPH_IMPORT_HEADER" />
+          <EntitySet Name="IORA_ORDER_ACTIONPOINT" EntityType="Self.IORA_ORDER_ACTIONPOINT" />
+          <EntitySet Name="IORH_ORDER_HEADER" EntityType="Self.IORH_ORDER_HEADER" />
+          <AssociationSet Name="FK_IAPO_IMPH_REFERENCE" Association="Self.FK_IAPO_IMPH_REFERENCE">
+            <End Role="IORA_ORDER_ACTIONPOINT" EntitySet="IORA_ORDER_ACTIONPOINT" />
+            <End Role="IAPO_ACTIONPOINT_OPENINGHOUR" EntitySet="IAPO_ACTIONPOINT_OPENINGHOUR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IORA_IMPH_REFERENCE" Association="Self.FK_IORA_IMPH_REFERENCE">
+            <End Role="IMPH_IMPORT_HEADER" EntitySet="IMPH_IMPORT_HEADER" />
+            <End Role="IORA_ORDER_ACTIONPOINT" EntitySet="IORA_ORDER_ACTIONPOINT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IORH_IMPH_REFERENCE" Association="Self.FK_IORH_IMPH_REFERENCE">
+            <End Role="IMPH_IMPORT_HEADER" EntitySet="IMPH_IMPORT_HEADER" />
+            <End Role="IORH_ORDER_HEADER" EntitySet="IORH_ORDER_HEADER" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TRANSFERDB_TESTModelStoreContainer" CdmEntityContainer="TRANSFERDB_TESTEntities3">
+          <EntitySetMapping Name="IAPO_ACTIONPOINT_OPENINGHOUR">
+            <EntityTypeMapping TypeName="TRANSFERDB_TESTModel.IAPO_ACTIONPOINT_OPENINGHOUR">
+              <MappingFragment StoreEntitySet="IAPO_ACTIONPOINT_OPENINGHOUR">
+                <ScalarProperty Name="IAPO_IORA_IMPH_REFERENCE" ColumnName="IAPO_IORA_IMPH_REFERENCE" />
+                <ScalarProperty Name="IAPO_IORA_ACTION" ColumnName="IAPO_IORA_ACTION" />
+                <ScalarProperty Name="IAPO_SEQU_NUMBER" ColumnName="IAPO_SEQU_NUMBER" />
+                <ScalarProperty Name="IAPO_FROM_WEEKDAY" ColumnName="IAPO_FROM_WEEKDAY" />
+                <ScalarProperty Name="IAPO_UNTIL_WEEKDAY" ColumnName="IAPO_UNTIL_WEEKDAY" />
+                <ScalarProperty Name="IAPO_FROM" ColumnName="IAPO_FROM" />
+                <ScalarProperty Name="IAPO_UNTIL" ColumnName="IAPO_UNTIL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMPH_IMPORT_HEADER">
+            <EntityTypeMapping TypeName="TRANSFERDB_TESTModel.IMPH_IMPORT_HEADER">
+              <MappingFragment StoreEntitySet="IMPH_IMPORT_HEADER">
+                <ScalarProperty Name="IMPH_REFERENCE" ColumnName="IMPH_REFERENCE" />
+                <ScalarProperty Name="IMPH_CONTEXT" ColumnName="IMPH_CONTEXT" />
+                <ScalarProperty Name="IMPH_OBJECT_TYPE" ColumnName="IMPH_OBJECT_TYPE" />
+                <ScalarProperty Name="IMPH_ACTION_CODE" ColumnName="IMPH_ACTION_CODE" />
+                <ScalarProperty Name="IMPH_EXTID" ColumnName="IMPH_EXTID" />
+                <ScalarProperty Name="IMPH_PROCESS_CODE" ColumnName="IMPH_PROCESS_CODE" />
+                <ScalarProperty Name="IMPH_CREATION_TIME" ColumnName="IMPH_CREATION_TIME" />
+                <ScalarProperty Name="IMPH_PROCESS_TIME" ColumnName="IMPH_PROCESS_TIME" />
+                <ScalarProperty Name="IMPH_PROCESS_RETRIES" ColumnName="IMPH_PROCESS_RETRIES" />
+                <ScalarProperty Name="IMPH_DESCRIPTION" ColumnName="IMPH_DESCRIPTION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IORA_ORDER_ACTIONPOINT">
+            <EntityTypeMapping TypeName="TRANSFERDB_TESTModel.IORA_ORDER_ACTIONPOINT">
+              <MappingFragment StoreEntitySet="IORA_ORDER_ACTIONPOINT">
+                <ScalarProperty Name="IORA_IMPH_REFERENCE" ColumnName="IORA_IMPH_REFERENCE" />
+                <ScalarProperty Name="IORA_ACTION" ColumnName="IORA_ACTION" />
+                <ScalarProperty Name="IORA_EXTID1" ColumnName="IORA_EXTID1" />
+                <ScalarProperty Name="IORA_EXTID2" ColumnName="IORA_EXTID2" />
+                <ScalarProperty Name="IORA_IS_ONETIME" ColumnName="IORA_IS_ONETIME" />
+                <ScalarProperty Name="IORA_NAME" ColumnName="IORA_NAME" />
+                <ScalarProperty Name="IORA_DESC" ColumnName="IORA_DESC" />
+                <ScalarProperty Name="IORA_SHORTDESC" ColumnName="IORA_SHORTDESC" />
+                <ScalarProperty Name="IORA_COUNTRY" ColumnName="IORA_COUNTRY" />
+                <ScalarProperty Name="IORA_STATE" ColumnName="IORA_STATE" />
+                <ScalarProperty Name="IORA_POSTCODE" ColumnName="IORA_POSTCODE" />
+                <ScalarProperty Name="IORA_CITY" ColumnName="IORA_CITY" />
+                <ScalarProperty Name="IORA_DISTRICT" ColumnName="IORA_DISTRICT" />
+                <ScalarProperty Name="IORA_STREET" ColumnName="IORA_STREET" />
+                <ScalarProperty Name="IORA_HOUSENO" ColumnName="IORA_HOUSENO" />
+                <ScalarProperty Name="IORA_LATITUDE" ColumnName="IORA_LATITUDE" />
+                <ScalarProperty Name="IORA_LONGITUDE" ColumnName="IORA_LONGITUDE" />
+                <ScalarProperty Name="IORA_COORD_TYPE" ColumnName="IORA_COORD_TYPE" />
+                <ScalarProperty Name="IORA_EARLIEST_DATETIME" ColumnName="IORA_EARLIEST_DATETIME" />
+                <ScalarProperty Name="IORA_LATEST_DATETIME" ColumnName="IORA_LATEST_DATETIME" />
+                <ScalarProperty Name="IORA_SERVICEPERIODEXTERNAL" ColumnName="IORA_SERVICEPERIODEXTERNAL" />
+                <ScalarProperty Name="IORA_OH_TOLERANCE_CLASS" ColumnName="IORA_OH_TOLERANCE_CLASS" />
+                <ScalarProperty Name="IORA_HANDLINGTIME_CLASS" ColumnName="IORA_HANDLINGTIME_CLASS" />
+                <ScalarProperty Name="IORA_HANDLINGTIME_ADDITIONAL" ColumnName="IORA_HANDLINGTIME_ADDITIONAL" />
+                <ScalarProperty Name="IORA_PRECOMBINED_TOUR_SEQUENCE" ColumnName="IORA_PRECOMBINED_TOUR_SEQUENCE" />
+                <ScalarProperty Name="IORA_TOUR_POS" ColumnName="IORA_TOUR_POS" />
+                <ScalarProperty Name="IORA_SERVICE_IN_INTERVAL" ColumnName="IORA_SERVICE_IN_INTERVAL" />
+                <ScalarProperty Name="IORA_CUSTOMER_INDICATOR" ColumnName="IORA_CUSTOMER_INDICATOR" />
+                <ScalarProperty Name="IORA_CUSTOMER_GROUP" ColumnName="IORA_CUSTOMER_GROUP" />
+                <ScalarProperty Name="IORA_NOTRAILER" ColumnName="IORA_NOTRAILER" />
+                <ScalarProperty Name="IORA_CODRIVER_NEEDED" ColumnName="IORA_CODRIVER_NEEDED" />
+                <ScalarProperty Name="IORA_VEHICLEREQUIREMENTS" ColumnName="IORA_VEHICLEREQUIREMENTS" />
+                <ScalarProperty Name="IORA_MIN_VEHICLE_GROUP" ColumnName="IORA_MIN_VEHICLE_GROUP" />
+                <ScalarProperty Name="IORA_MAX_VEHICLE_GROUP" ColumnName="IORA_MAX_VEHICLE_GROUP" />
+                <ScalarProperty Name="IORA_ADDITIONAL_VEHICLE_GROUP" ColumnName="IORA_ADDITIONAL_VEHICLE_GROUP" />
+                <ScalarProperty Name="IORA_PHONE" ColumnName="IORA_PHONE" />
+                <ScalarProperty Name="IORA_EMAIL" ColumnName="IORA_EMAIL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IORH_ORDER_HEADER">
+            <EntityTypeMapping TypeName="TRANSFERDB_TESTModel.IORH_ORDER_HEADER">
+              <MappingFragment StoreEntitySet="IORH_ORDER_HEADER">
+                <ScalarProperty Name="IORH_IMPH_REFERENCE" ColumnName="IORH_IMPH_REFERENCE" />
+                <ScalarProperty Name="IORH_ORDER_TYPE" ColumnName="IORH_ORDER_TYPE" />
+                <ScalarProperty Name="IORH_EXTID2" ColumnName="IORH_EXTID2" />
+                <ScalarProperty Name="IORH_CUSTOMER_ORDER_EXTID" ColumnName="IORH_CUSTOMER_ORDER_EXTID" />
+                <ScalarProperty Name="IORH_NOTE" ColumnName="IORH_NOTE" />
+                <ScalarProperty Name="IORH_ASSORTMENT" ColumnName="IORH_ASSORTMENT" />
+                <ScalarProperty Name="IORH_CUSTOMER" ColumnName="IORH_CUSTOMER" />
+                <ScalarProperty Name="IORH_CONSIGNMENT_EXTID" ColumnName="IORH_CONSIGNMENT_EXTID" />
+                <ScalarProperty Name="IORH_LOGISTIC_EXTID" ColumnName="IORH_LOGISTIC_EXTID" />
+                <ScalarProperty Name="IORH_PRECOMBINED_TOUR" ColumnName="IORH_PRECOMBINED_TOUR" />
+                <ScalarProperty Name="IORH_PREASSIGNED_TRUCK" ColumnName="IORH_PREASSIGNED_TRUCK" />
+                <ScalarProperty Name="IORH_VEHICLEREQUIREMENTS" ColumnName="IORH_VEHICLEREQUIREMENTS" />
+                <ScalarProperty Name="IORH_PRIORITY" ColumnName="IORH_PRIORITY" />
+                <ScalarProperty Name="IORH_CODRIVER_NEEDED" ColumnName="IORH_CODRIVER_NEEDED" />
+                <ScalarProperty Name="IORH_TRANSPORTPERIOD" ColumnName="IORH_TRANSPORTPERIOD" />
+                <ScalarProperty Name="IORH_SOLO" ColumnName="IORH_SOLO" />
+                <ScalarProperty Name="IORH_WEIGHT" ColumnName="IORH_WEIGHT" />
+                <ScalarProperty Name="IORH_VOLUME" ColumnName="IORH_VOLUME" />
+                <ScalarProperty Name="IORH_LOADMETER" ColumnName="IORH_LOADMETER" />
+                <ScalarProperty Name="IORH_QUANTITY_1" ColumnName="IORH_QUANTITY_1" />
+                <ScalarProperty Name="IORH_QUANTITY_2" ColumnName="IORH_QUANTITY_2" />
+                <ScalarProperty Name="IORH_QUANTITY_3" ColumnName="IORH_QUANTITY_3" />
+                <ScalarProperty Name="IORH_QUANTITY_4" ColumnName="IORH_QUANTITY_4" />
+                <ScalarProperty Name="IORH_QUANTITY_5" ColumnName="IORH_QUANTITY_5" />
+                <ScalarProperty Name="IORH_QUANTITY_6" ColumnName="IORH_QUANTITY_6" />
+                <ScalarProperty Name="IORH_QUANTITY_7" ColumnName="IORH_QUANTITY_7" />
+                <ScalarProperty Name="IORH_LENGTH" ColumnName="IORH_LENGTH" />
+                <ScalarProperty Name="IORH_WIDTH" ColumnName="IORH_WIDTH" />
+                <ScalarProperty Name="IORH_HEIGHT" ColumnName="IORH_HEIGHT" />
+                <ScalarProperty Name="IORH_NUM_1" ColumnName="IORH_NUM_1" />
+                <ScalarProperty Name="IORH_NUM_2" ColumnName="IORH_NUM_2" />
+                <ScalarProperty Name="IORH_NUM_3" ColumnName="IORH_NUM_3" />
+                <ScalarProperty Name="IORH_NUM_4" ColumnName="IORH_NUM_4" />
+                <ScalarProperty Name="IORH_NUM_5" ColumnName="IORH_NUM_5" />
+                <ScalarProperty Name="IORH_NUM_6" ColumnName="IORH_NUM_6" />
+                <ScalarProperty Name="IORH_NUM_7" ColumnName="IORH_NUM_7" />
+                <ScalarProperty Name="IORH_NUM_8" ColumnName="IORH_NUM_8" />
+                <ScalarProperty Name="IORH_NUM_9" ColumnName="IORH_NUM_9" />
+                <ScalarProperty Name="IORH_NUM_10" ColumnName="IORH_NUM_10" />
+                <ScalarProperty Name="IORH_TEXT_1" ColumnName="IORH_TEXT_1" />
+                <ScalarProperty Name="IORH_TEXT_2" ColumnName="IORH_TEXT_2" />
+                <ScalarProperty Name="IORH_TEXT_3" ColumnName="IORH_TEXT_3" />
+                <ScalarProperty Name="IORH_TEXT_4" ColumnName="IORH_TEXT_4" />
+                <ScalarProperty Name="IORH_TEXT_5" ColumnName="IORH_TEXT_5" />
+                <ScalarProperty Name="IORH_TEXT_6" ColumnName="IORH_TEXT_6" />
+                <ScalarProperty Name="IORH_TEXT_7" ColumnName="IORH_TEXT_7" />
+                <ScalarProperty Name="IORH_TEXT_8" ColumnName="IORH_TEXT_8" />
+                <ScalarProperty Name="IORH_TEXT_9" ColumnName="IORH_TEXT_9" />
+                <ScalarProperty Name="IORH_TEXT_10" ColumnName="IORH_TEXT_10" />
+                <ScalarProperty Name="IORH_TASKFIELDS" ColumnName="IORH_TASKFIELDS" />
+                <ScalarProperty Name="IORH_ALTERNATIVE_DEPOTS" ColumnName="IORH_ALTERNATIVE_DEPOTS" />
+                <ScalarProperty Name="IORH_PICKUP_EXTID1" ColumnName="IORH_PICKUP_EXTID1" />
+                <ScalarProperty Name="IORH_PICKUP_EARLIEST_DATETIME" ColumnName="IORH_PICKUP_EARLIEST_DATETIME" />
+                <ScalarProperty Name="IORH_PICKUP_LATEST_DATETIME" ColumnName="IORH_PICKUP_LATEST_DATETIME" />
+                <ScalarProperty Name="IORH_DELVRY_EXTID1" ColumnName="IORH_DELVRY_EXTID1" />
+                <ScalarProperty Name="IORH_DELVRY_EARLIEST_DATETIME" ColumnName="IORH_DELVRY_EARLIEST_DATETIME" />
+                <ScalarProperty Name="IORH_DELVRY_LATEST_DATETIME" ColumnName="IORH_DELVRY_LATEST_DATETIME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
