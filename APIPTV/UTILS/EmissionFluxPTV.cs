@@ -40,7 +40,7 @@ namespace APIPTV.UTILS
                       "IMPH_ACTION_CODE = @IMPH_ACTION_CODE ," +
                       "IMPH_PROCESS_CODE = @IMPH_PROCESS_CODE ," +
                       "IMPH_CREATION_TIME = @IMPH_CREATION_TIME " +
-                      "WHERE IMPH_REFERENCE = @IMPH_REFERENCE";
+                      "WHERE IMPH_REFERENCE = @IMPH_REFERENCE"; 
                     }
                     else
                     {
