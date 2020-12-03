@@ -11,7 +11,7 @@ namespace APIPTV.Models
         public string CodeAgence { get; set; }
         public string CodeDirection { get; set; }
         public string Action { get; set; }
-        public string Ordre { get; set; }
+        public int Ordre { get; set; }
         public string DateHeureDebutCommande { get; set; }
         public string DateHeureArriveeClient { get; set; }
         public string DateHeureDepartClient { get; set; }

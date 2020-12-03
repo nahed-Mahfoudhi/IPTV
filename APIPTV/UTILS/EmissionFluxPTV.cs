@@ -4,6 +4,7 @@ using APIPTV.Models;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
@@ -17,6 +18,279 @@ namespace APIPTV.UTILS
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
         public static string _connectionString = @"Server=SRVSMARTOUR\PTVLO;Database=TRANSFERDB_TEST;User Id=sa;Password=SmarTour4u$;";
+        //public static void InsertOrUpdate(List<ModeleBasePTV> listModeleBasePTV)
+        //{
+        //    foreach (var m in listModeleBasePTV)
+        //    {
+        //        using (SqlConnection connection = new SqlConnection(_connectionString))
+        //        {
+
+        //            SqlCommand checkifExist = new SqlCommand("SELECT COUNT(*) FROM dbo.IMPH_IMPORT_HEADER WHERE (IMPH_REFERENCE = @IMPH_REFERENCE)", connection);
+        //            checkifExist.Parameters.AddWithValue("@IMPH_REFERENCE", m.reference);
+        //            connection.Open();
+        //            int UserExist = (int)checkifExist.ExecuteScalar();
+        //            connection.Close();
+        //            String query = string.Empty;
+        //            if (UserExist > 0)
+        //            {
+        //                query = "UPDATE  dbo.IMPH_IMPORT_HEADER " +
+        //              "SET " +
+        //              "IMPH_CONTEXT = @IMPH_CONTEXT ," +
+        //              "IMPH_OBJECT_TYPE = @IMPH_OBJECT_TYPE ," +
+        //              "IMPH_EXTID = @IMPH_EXTID ," +
+        //              "IMPH_ACTION_CODE = @IMPH_ACTION_CODE ," +
+        //              "IMPH_PROCESS_CODE = @IMPH_PROCESS_CODE ," +
+        //              "IMPH_CREATION_TIME = @IMPH_CREATION_TIME " +
+        //              "WHERE IMPH_REFERENCE = @IMPH_REFERENCE"; 
+        //            }
+        //            else
+        //            {
+        //                query = "INSERT INTO dbo.IMPH_IMPORT_HEADER (IMPH_REFERENCE,IMPH_CONTEXT,IMPH_OBJECT_TYPE,IMPH_EXTID,IMPH_ACTION_CODE,IMPH_PROCESS_CODE,IMPH_CREATION_TIME) " +
+        //                                "VALUES (@IMPH_REFERENCE,@IMPH_CONTEXT,@IMPH_OBJECT_TYPE,@IMPH_EXTID,@IMPH_ACTION_CODE,@IMPH_PROCESS_CODE,@IMPH_CREATION_TIME)";
+        //            }
+        //                using (SqlCommand command = new SqlCommand(query, connection))
+        //                {
+        //                    command.Parameters.AddWithValue("@IMPH_REFERENCE", m.reference );
+        //                    command.Parameters.AddWithValue("@IMPH_CONTEXT", m.Context);
+        //                    command.Parameters.AddWithValue("@IMPH_OBJECT_TYPE", m.object_type);
+        //                    command.Parameters.AddWithValue("@IMPH_EXTID", m.extid);
+        //                    command.Parameters.AddWithValue("@IMPH_ACTION_CODE", m.action_code);
+        //                    command.Parameters.AddWithValue("@IMPH_PROCESS_CODE", m.process_code);
+        //                    command.Parameters.AddWithValue("@IMPH_CREATION_TIME", m.creation_time);
+
+        //                    connection.Open();
+        //                    int result = command.ExecuteNonQuery();
+
+        //                }                                    
+        //        }
+
+
+
+        //        using (SqlConnection connection = new SqlConnection(_connectionString))
+        //        {
+        //            SqlCommand checkifExist = new SqlCommand("SELECT COUNT(*) FROM dbo.IORH_ORDER_HEADER WHERE (IORH_IMPH_REFERENCE = @IORH_IMPH_REFERENCE)", connection);
+        //            checkifExist.Parameters.AddWithValue("@IORH_IMPH_REFERENCE", m.reference);
+        //            connection.Open();
+        //            int UserExist = (int)checkifExist.ExecuteScalar();
+        //            connection.Close();
+        //            String query = string.Empty;
+        //            if (UserExist > 0)
+        //            {
+        //                query = "UPDATE  dbo.IORH_ORDER_HEADER " +
+        //               "SET " +
+        //               "IORH_ORDER_TYPE = @IORH_ORDER_TYPE," +
+        //               "IORH_TASKFIELDS = @IORH_TASKFIELDS," +
+        //               "IORH_WEIGHT = @IORH_WEIGHT," +
+        //               "IORH_VOLUME = @IORH_VOLUME ," +
+        //               "IORH_QUANTITY_1 = @IORH_QUANTITY_1 ," +
+        //               "IORH_VEHICLEREQUIREMENTS = @IORH_VEHICLEREQUIREMENTS ," +
+        //               "IORH_TEXT_1 = @IORH_TEXT_1," +
+        //               "IORH_TEXT_10 = @IORH_TEXT_10 ," +
+        //               "IORH_NUM_1 = @IORH_NUM_1 ," +
+        //               "IORH_NUM_2 = @IORH_NUM_2 ," +
+        //               "IORH_TEXT_5 = @IORH_TEXT_5 " +
+        //               "WHERE IORH_IMPH_REFERENCE = @IORH_IMPH_REFERENCE";
+        //            }
+        //            else
+        //            {
+        //                query = "INSERT INTO dbo.IORH_ORDER_HEADER (IORH_IMPH_REFERENCE,IORH_ORDER_TYPE,IORH_TASKFIELDS,IORH_WEIGHT,IORH_VOLUME,IORH_QUANTITY_1,IORH_VEHICLEREQUIREMENTS ,IORH_TEXT_1 , IORH_TEXT_10 , IORH_NUM_1,IORH_NUM_2, IORH_TEXT_5) " +
+        //                                                    "VALUES (@IORH_IMPH_REFERENCE,@IORH_ORDER_TYPE,@IORH_TASKFIELDS,@IORH_WEIGHT,@IORH_VOLUME,@IORH_QUANTITY_1,@IORH_VEHICLEREQUIREMENTS,@IORH_TEXT_1,@IORH_TEXT_10,@IORH_NUM_1,@IORH_NUM_2,@IORH_TEXT_5)";
+        //            }
+        //                using (SqlCommand command = new SqlCommand(query, connection))
+        //                {
+
+        //                    SqlParameter referenceParam = command.Parameters.AddWithValue("@IORH_IMPH_REFERENCE", m.reference);
+        //                    if (m.reference == null) { referenceParam.Value = DBNull.Value; }
+        //                    SqlParameter order_typeParam = command.Parameters.AddWithValue("@IORH_ORDER_TYPE", m.order_type);
+        //                    if (m.order_type == null) { order_typeParam.Value = DBNull.Value; }
+        //                    SqlParameter taskfieldsParam = command.Parameters.AddWithValue("@IORH_TASKFIELDS", m.taskfields);
+        //                    if (m.taskfields == null) { taskfieldsParam.Value = DBNull.Value; }
+        //                    SqlParameter weightParam = command.Parameters.AddWithValue("@IORH_WEIGHT", m.weight);
+        //                    if (m.weight == null) { weightParam.Value = DBNull.Value; }
+        //                    SqlParameter volumeParam = command.Parameters.AddWithValue("@IORH_VOLUME", m.volume);
+        //                    if (m.volume == null) { volumeParam.Value = DBNull.Value; }
+        //                    SqlParameter quantity_1Param = command.Parameters.AddWithValue("@IORH_QUANTITY_1", m.quantity_1);
+        //                    if (m.quantity_1 == null) { quantity_1Param.Value = DBNull.Value; }
+        //                    SqlParameter vehicleRequirementsParam = command.Parameters.AddWithValue("@IORH_VEHICLEREQUIREMENTS", m.vehicleRequirements);
+        //                    if (m.vehicleRequirements == null) { vehicleRequirementsParam.Value = DBNull.Value; }
+        //                    SqlParameter text_1Param = command.Parameters.AddWithValue("@IORH_TEXT_1", m.text_1);
+        //                    if (m.text_1 == null) { text_1Param.Value = DBNull.Value; }
+        //                    SqlParameter text_10Param = command.Parameters.AddWithValue("@IORH_TEXT_10", m.text_10);
+        //                    if (m.text_10 == null) { text_10Param.Value = DBNull.Value; }
+        //                    SqlParameter num_1Param = command.Parameters.AddWithValue("@IORH_NUM_1", m.num_1);
+        //                    if (m.num_1 == null) { num_1Param.Value = DBNull.Value; }
+        //                    SqlParameter num_2Param = command.Parameters.AddWithValue("@IORH_NUM_2", m.num_2);
+        //                    if (m.num_2 == null) { num_2Param.Value = DBNull.Value; }
+        //                    SqlParameter text_5Param = command.Parameters.AddWithValue("@IORH_TEXT_5", m.text_5);
+        //                    if (m.text_5 == null) { text_5Param.Value = DBNull.Value; }
+
+        //                    //The parameterized query '(@IORH_IMPH_REFERENCE decimal(1,0),@IORH_ORDER_TYPE nvarchar(8),' expects the parameter '@IORH_VOLUME', which was not supplied.
+        //                    connection.Open();
+        //                    int result = command.ExecuteNonQuery();
+
+        //                }                    
+        //        }
+
+
+
+        //        using (SqlConnection connection = new SqlConnection(_connectionString))
+        //        {
+        //            SqlCommand checkifExist = new SqlCommand("SELECT COUNT(*) FROM dbo.IORA_ORDER_ACTIONPOINT WHERE (IORA_IMPH_REFERENCE = @IORA_IMPH_REFERENCE AND IORA_ACTION = @IORA_ACTION )", connection);
+        //            checkifExist.Parameters.AddWithValue("@IORA_IMPH_REFERENCE", m.reference);
+        //            checkifExist.Parameters.AddWithValue("@IORA_ACTION", m.action == "R" ? "DELIVERY" : "PICKUP");
+
+        //            connection.Open();
+        //            int UserExist = (int)checkifExist.ExecuteScalar();
+        //            connection.Close();
+        //            String query = string.Empty;
+        //            String query2 = string.Empty;
+        //            if (UserExist > 0)
+        //            {
+        //                //Username exist log
+        //                query = "UPDATE  dbo.IORA_ORDER_ACTIONPOINT " +
+        //                  "SET " +
+        //                  "IORA_ACTION = @IORA_ACTION ," +
+        //                  "IORA_EXTID1 = @IORA_EXTID1 ," +
+        //                  "IORA_IS_ONETIME = @IORA_IS_ONETIME ," +
+        //                  "IORA_NAME = @IORA_NAME ," +
+        //                  "IORA_STREET = @IORA_STREET ," +
+        //                  "IORA_POSTCODE = @IORA_POSTCODE ," +
+        //                  "IORA_CITY = @IORA_CITY ," +
+        //                  "IORA_EARLIEST_DATETIME = @IORA_EARLIEST_DATETIME ," +
+        //                  "IORA_HANDLINGTIME_CLASS = @IORA_HANDLINGTIME_CLASS " +
+        //                  "WHERE IORA_IMPH_REFERENCE = @IORA_IMPH_REFERENCE";
+        //            }
+        //            else
+        //            {
+        //                connection.Open();
+
+        //                query = "INSERT INTO dbo.IORA_ORDER_ACTIONPOINT(IORA_IMPH_REFERENCE, IORA_ACTION, IORA_EXTID1,  IORA_IS_ONETIME,  IORA_EARLIEST_DATETIME,  IORA_LATEST_DATETIME)"+
+        //             "VALUES (@IORA_IMPH_REFERENCE,@IORA_ACTION,@IORA_EXTID1,@IORA_IS_ONETIME,  @IORA_EARLIEST_DATETIME,@IORA_LATEST_DATETIME )";
+
+        //                    using (SqlCommand command = new SqlCommand(query, connection))
+        //                    {
+        //                        command.Parameters.AddWithValue("@IORA_IMPH_REFERENCE", m.reference);
+        //                        command.Parameters.AddWithValue("@IORA_ACTION", m.action  == "REP" ? "DELIVERY" : "PICKUP");
+        //                         command.Parameters.AddWithValue("@IORA_EXTID1", m.extid1);
+        //                       command.Parameters.AddWithValue("@IORA_IS_ONETIME", 0);                          
+        //                        command.Parameters.AddWithValue("@IORA_EARLIEST_DATETIME", m.earliest_datetime);
+        //                        command.Parameters.AddWithValue("@IORA_LATEST_DATETIME", m.latest_datetime);
+
+        //                        SqlParameter serviceperiodeParam = command.Parameters.AddWithValue("@IORA_SERVICEPERIODEXTERNAL", m.serviceperiode);
+        //                        if (m.serviceperiode == null) { serviceperiodeParam.Value = DBNull.Value; }
+
+        //                        //The parameterized query '(@IORA_IMPH_REFERENCE decimal(1,0),@IORA_ACTION nvarchar(8),@IOR' expects the parameter '@IORA_SERVICEPERIODEXTERNAL', which was not supplied.
+
+        //                        int result = command.ExecuteNonQuery();
+        //                    }
+
+
+        //                query2 = "INSERT INTO dbo.IORA_ORDER_ACTIONPOINT (IORA_IMPH_REFERENCE, IORA_ACTION, IORA_EXTID1,  IORA_IS_ONETIME, IORA_NAME, IORA_STREET, IORA_COUNTRY, IORA_POSTCODE, IORA_CITY,  IORA_EARLIEST_DATETIME,  IORA_LATEST_DATETIME, IORA_HANDLINGTIME_CLASS, IORA_SERVICEPERIODEXTERNAL)  " +
+        //      "VALUES (@IORA_IMPH_REFERENCE,@IORA_ACTION,@IORA_EXTID1,@IORA_IS_ONETIME,@IORA_NAME,@IORA_STREET,@IORA_COUNTRY,@IORA_POSTCODE,@IORA_CITY,@IORA_EARLIEST_DATETIME,@IORA_LATEST_DATETIME,@IORA_HANDLINGTIME_CLASS,@IORA_SERVICEPERIODEXTERNAL)";
+
+
+
+        //                using (SqlCommand command = new SqlCommand(query2, connection))
+        //                {
+        //                    command.Parameters.AddWithValue("@IORA_IMPH_REFERENCE", m.reference);
+        //                    command.Parameters.AddWithValue("@IORA_ACTION", m.action == "REP" ? "PICKUP" : "DELIVERY");
+        //                    command.Parameters.AddWithValue("@IORA_EXTID1", m.extid2);
+        //                    command.Parameters.AddWithValue("@IORA_IS_ONETIME", 1);
+        //                    command.Parameters.AddWithValue("@IORA_NAME", m.name);
+        //                    command.Parameters.AddWithValue("@IORA_STREET", m.street);
+        //                    command.Parameters.AddWithValue("@IORA_COUNTRY", m.country);
+        //                    command.Parameters.AddWithValue("@IORA_POSTCODE", m.postcode);
+        //                    command.Parameters.AddWithValue("@IORA_CITY", m.city);
+        //                    command.Parameters.AddWithValue("@IORA_EARLIEST_DATETIME", m.earliest_datetime);
+        //                    command.Parameters.AddWithValue("@IORA_LATEST_DATETIME", m.latest_datetime);
+        //                    command.Parameters.AddWithValue("@IORA_HANDLINGTIME_CLASS", m.handlingtime_class);
+        //                    SqlParameter serviceperiodeParam = command.Parameters.AddWithValue("@IORA_SERVICEPERIODEXTERNAL", m.serviceperiode);
+        //                    if (m.serviceperiode == null) { serviceperiodeParam.Value = DBNull.Value; }
+
+        //                    //The parameterized query '(@IORA_IMPH_REFERENCE decimal(1,0),@IORA_ACTION nvarchar(8),@IOR' expects the parameter '@IORA_SERVICEPERIODEXTERNAL', which was not supplied.
+
+
+
+        //                    int result = command.ExecuteNonQuery();
+        //                }
+
+
+        //            }
+
+
+        //        }
+
+
+        //        using (SqlConnection connection = new SqlConnection(_connectionString))
+        //        {
+
+        //            SqlCommand checkifExist = new SqlCommand("SELECT COUNT(*) FROM dbo.IAPO_ACTIONPOINT_OPENINGHOUR WHERE (IAPO_IORA_IMPH_REFERENCE = @IAPO_IORA_IMPH_REFERENCE)", connection);
+        //            checkifExist.Parameters.AddWithValue("@IAPO_IORA_IMPH_REFERENCE", m.reference);
+        //            connection.Open();
+        //            int UserExist = (int)checkifExist.ExecuteScalar();
+        //            connection.Close();
+        //            String query = string.Empty;
+        //            if (UserExist > 0)
+        //            {
+        //                query = "UPDATE  dbo.IAPO_ACTIONPOINT_OPENINGHOUR " +
+        //                  "SET " +
+        //                  "IAPO_IORA_ACTION = @IAPO_IORA_ACTION ," +
+        //                  "IAPO_SEQU_NUMBER = @IAPO_SEQU_NUMBER ," +
+        //                  "IAPO_FROM_WEEKDAY = @IAPO_FROM_WEEKDAY ," +
+        //                  "IAPO_UNTIL_WEEKDAY = @IAPO_UNTIL_WEEKDAY ," +
+        //                  "IAPO_FROM = @IAPO_FROM ," +
+        //                  "IAPO_UNTIL = @IAPO_UNTIL " +
+        //                  //"IORA_EARLIEST_DATETIME = @IORA_EARLIEST_DATETIME ," +
+        //                  //"IORA_LATEST_DATETIME = @IORA_LATEST_DATETIME ," +
+        //                  //"IORA_HANDLINGTIME_CLASS = @IORA_HANDLINGTIME_CLASS" +
+        //                  "WHERE IAPO_IORA_IMPH_REFERENCE = @IAPO_IORA_IMPH_REFERENCE";
+        //            }
+        //            else
+        //            {
+        //                query = "INSERT INTO dbo.IAPO_ACTIONPOINT_OPENINGHOUR (IAPO_IORA_IMPH_REFERENCE,IAPO_IORA_ACTION,IAPO_SEQU_NUMBER    ,IAPO_FROM_WEEKDAY   ," +
+        //            "IAPO_UNTIL_WEEKDAY  ,IAPO_FROM, IAPO_UNTIL) " +
+        //            "VALUES (@IAPO_IORA_IMPH_REFERENCE,@IAPO_IORA_ACTION,@IAPO_SEQU_NUMBER,@IAPO_FROM_WEEKDAY,@IAPO_UNTIL_WEEKDAY,@IAPO_FROM,@IAPO_UNTIL)";
+        //            }
+        //                using (SqlCommand command = new SqlCommand(query, connection))
+        //                {
+        //                    SqlParameter referenceParam = command.Parameters.AddWithValue("@IAPO_IORA_IMPH_REFERENCE", m.reference );//clé primaire
+        //                    if (m.reference == null)
+        //                    {
+        //                        referenceParam.Value = DBNull.Value;
+        //                    }
+        //                    SqlParameter actionParam = command.Parameters.AddWithValue("@IAPO_IORA_ACTION", m.action == "REP" ? "PICKUP" : "DELIVERY");
+        //                    if (m.action == null)
+        //                    {
+        //                        actionParam.Value = DBNull.Value;
+        //                    }
+        //                    SqlParameter Seq_NumberParam = command.Parameters.AddWithValue("@IAPO_SEQU_NUMBER", m.Seq_Number);
+        //                    if (m.Seq_Number == null)
+        //                    {
+        //                        Seq_NumberParam.Value = DBNull.Value;
+        //                    }
+        //                    command.Parameters.AddWithValue("@IAPO_FROM_WEEKDAY", m.from_weekday); //m.from_weekday ( soit nul soit un jour de la semaine en EN (SAT,FRI etc ...")
+        //                    command.Parameters.AddWithValue("@IAPO_UNTIL_WEEKDAY", m.until_weekday);//m.until_weekday ( soit nul soit un jour de la semaine en EN (SAT,FRI etc ...")
+        //                    SqlParameter fromParam = command.Parameters.AddWithValue("@IAPO_FROM", Convert.ToString(m.from));
+        //                    if (m.from == null)
+        //                    {
+        //                        fromParam.Value = DBNull.Value;
+        //                    }
+        //                    SqlParameter untilParam = command.Parameters.AddWithValue("@IAPO_UNTIL", Convert.ToString(m.until));
+        //                    if (m.until == null)
+        //                    {
+        //                        untilParam.Value = DBNull.Value;
+        //                    }
+
+        //                connection.Open();
+        //                    int result = command.ExecuteNonQuery();
+
+        //            }
+        //        }
+
+        //    }
+        //}
+
+
         public static void InsertOrUpdate(List<ModeleBasePTV> listModeleBasePTV)
         {
             foreach (var m in listModeleBasePTV)
@@ -40,34 +314,31 @@ namespace APIPTV.UTILS
                       "IMPH_ACTION_CODE = @IMPH_ACTION_CODE ," +
                       "IMPH_PROCESS_CODE = @IMPH_PROCESS_CODE ," +
                       "IMPH_CREATION_TIME = @IMPH_CREATION_TIME " +
-                      "WHERE IMPH_REFERENCE = @IMPH_REFERENCE"; 
+                      "WHERE IMPH_REFERENCE = @IMPH_REFERENCE";
                     }
                     else
                     {
                         query = "INSERT INTO dbo.IMPH_IMPORT_HEADER (IMPH_REFERENCE,IMPH_CONTEXT,IMPH_OBJECT_TYPE,IMPH_EXTID,IMPH_ACTION_CODE,IMPH_PROCESS_CODE,IMPH_CREATION_TIME) " +
                                         "VALUES (@IMPH_REFERENCE,@IMPH_CONTEXT,@IMPH_OBJECT_TYPE,@IMPH_EXTID,@IMPH_ACTION_CODE,@IMPH_PROCESS_CODE,@IMPH_CREATION_TIME)";
                     }
-                        using (SqlCommand command = new SqlCommand(query, connection))
-                        {
-                            command.Parameters.AddWithValue("@IMPH_REFERENCE", m.reference );
-                            command.Parameters.AddWithValue("@IMPH_CONTEXT", m.Context);
-                            command.Parameters.AddWithValue("@IMPH_OBJECT_TYPE", m.object_type);
-                            command.Parameters.AddWithValue("@IMPH_EXTID", m.extid);
-                            command.Parameters.AddWithValue("@IMPH_ACTION_CODE", m.action_code);
-                            command.Parameters.AddWithValue("@IMPH_PROCESS_CODE", m.process_code);
-                            command.Parameters.AddWithValue("@IMPH_CREATION_TIME", m.creation_time);
-                       
-                            connection.Open();
-                            int result = command.ExecuteNonQuery();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@IMPH_REFERENCE", m.reference);
+                        command.Parameters.AddWithValue("@IMPH_CONTEXT", m.Context);
+                        command.Parameters.AddWithValue("@IMPH_OBJECT_TYPE", m.object_type);
+                        command.Parameters.AddWithValue("@IMPH_EXTID", m.extid);
+                        command.Parameters.AddWithValue("@IMPH_ACTION_CODE", m.action_code);
+                        command.Parameters.AddWithValue("@IMPH_PROCESS_CODE", m.process_code);
+                        command.Parameters.AddWithValue("@IMPH_CREATION_TIME", m.creation_time);
 
-                        }                                    
+                        connection.Open();
+                        int result = command.ExecuteNonQuery();
+
+                    }
                 }
 
 
-       
 
-
-      
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
                     SqlCommand checkifExist = new SqlCommand("SELECT COUNT(*) FROM dbo.IORH_ORDER_HEADER WHERE (IORH_IMPH_REFERENCE = @IORH_IMPH_REFERENCE)", connection);
@@ -98,48 +369,49 @@ namespace APIPTV.UTILS
                         query = "INSERT INTO dbo.IORH_ORDER_HEADER (IORH_IMPH_REFERENCE,IORH_ORDER_TYPE,IORH_TASKFIELDS,IORH_WEIGHT,IORH_VOLUME,IORH_QUANTITY_1,IORH_VEHICLEREQUIREMENTS ,IORH_TEXT_1 , IORH_TEXT_10 , IORH_NUM_1,IORH_NUM_2, IORH_TEXT_5) " +
                                                             "VALUES (@IORH_IMPH_REFERENCE,@IORH_ORDER_TYPE,@IORH_TASKFIELDS,@IORH_WEIGHT,@IORH_VOLUME,@IORH_QUANTITY_1,@IORH_VEHICLEREQUIREMENTS,@IORH_TEXT_1,@IORH_TEXT_10,@IORH_NUM_1,@IORH_NUM_2,@IORH_TEXT_5)";
                     }
-                        using (SqlCommand command = new SqlCommand(query, connection))
-                        {
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
 
-                            SqlParameter referenceParam = command.Parameters.AddWithValue("@IORH_IMPH_REFERENCE", m.reference);
-                            if (m.reference == null) { referenceParam.Value = DBNull.Value; }
-                            SqlParameter order_typeParam = command.Parameters.AddWithValue("@IORH_ORDER_TYPE", m.order_type);
-                            if (m.order_type == null) { order_typeParam.Value = DBNull.Value; }
-                            SqlParameter taskfieldsParam = command.Parameters.AddWithValue("@IORH_TASKFIELDS", m.taskfields);
-                            if (m.taskfields == null) { taskfieldsParam.Value = DBNull.Value; }
-                            SqlParameter weightParam = command.Parameters.AddWithValue("@IORH_WEIGHT", m.weight);
-                            if (m.weight == null) { weightParam.Value = DBNull.Value; }
-                            SqlParameter volumeParam = command.Parameters.AddWithValue("@IORH_VOLUME", m.volume);
-                            if (m.volume == null) { volumeParam.Value = DBNull.Value; }
-                            SqlParameter quantity_1Param = command.Parameters.AddWithValue("@IORH_QUANTITY_1", m.quantity_1);
-                            if (m.quantity_1 == null) { quantity_1Param.Value = DBNull.Value; }
-                            SqlParameter vehicleRequirementsParam = command.Parameters.AddWithValue("@IORH_VEHICLEREQUIREMENTS", m.vehicleRequirements);
-                            if (m.vehicleRequirements == null) { vehicleRequirementsParam.Value = DBNull.Value; }
-                            SqlParameter text_1Param = command.Parameters.AddWithValue("@IORH_TEXT_1", m.text_1);
-                            if (m.text_1 == null) { text_1Param.Value = DBNull.Value; }
-                            SqlParameter text_10Param = command.Parameters.AddWithValue("@IORH_TEXT_10", m.text_10);
-                            if (m.text_10 == null) { text_10Param.Value = DBNull.Value; }
-                            SqlParameter num_1Param = command.Parameters.AddWithValue("@IORH_NUM_1", m.num_1);
-                            if (m.num_1 == null) { num_1Param.Value = DBNull.Value; }
-                            SqlParameter num_2Param = command.Parameters.AddWithValue("@IORH_NUM_2", m.num_2);
-                            if (m.num_2 == null) { num_2Param.Value = DBNull.Value; }
-                            SqlParameter text_5Param = command.Parameters.AddWithValue("@IORH_TEXT_5", m.text_5);
-                            if (m.text_5 == null) { text_5Param.Value = DBNull.Value; }
+                        SqlParameter referenceParam = command.Parameters.AddWithValue("@IORH_IMPH_REFERENCE", m.reference);
+                        if (m.reference == null) { referenceParam.Value = DBNull.Value; }
+                        SqlParameter order_typeParam = command.Parameters.AddWithValue("@IORH_ORDER_TYPE", m.order_type);
+                        if (m.order_type == null) { order_typeParam.Value = DBNull.Value; }
+                        SqlParameter taskfieldsParam = command.Parameters.AddWithValue("@IORH_TASKFIELDS", m.taskfields);
+                        if (m.taskfields == null) { taskfieldsParam.Value = DBNull.Value; }
+                        SqlParameter weightParam = command.Parameters.AddWithValue("@IORH_WEIGHT", m.weight);
+                        if (m.weight == null) { weightParam.Value = DBNull.Value; }
+                        SqlParameter volumeParam = command.Parameters.AddWithValue("@IORH_VOLUME", m.volume);
+                        if (m.volume == null) { volumeParam.Value = DBNull.Value; }
+                        SqlParameter quantity_1Param = command.Parameters.AddWithValue("@IORH_QUANTITY_1", m.quantity_1);
+                        if (m.quantity_1 == null) { quantity_1Param.Value = DBNull.Value; }
+                        SqlParameter vehicleRequirementsParam = command.Parameters.AddWithValue("@IORH_VEHICLEREQUIREMENTS", m.vehicleRequirements);
+                        if (m.vehicleRequirements == null) { vehicleRequirementsParam.Value = DBNull.Value; }
+                        SqlParameter text_1Param = command.Parameters.AddWithValue("@IORH_TEXT_1", m.text_1);
+                        if (m.text_1 == null) { text_1Param.Value = DBNull.Value; }
+                        SqlParameter text_10Param = command.Parameters.AddWithValue("@IORH_TEXT_10", m.text_10);
+                        if (m.text_10 == null) { text_10Param.Value = DBNull.Value; }
+                        SqlParameter num_1Param = command.Parameters.AddWithValue("@IORH_NUM_1", m.num_1);
+                        if (m.num_1 == null) { num_1Param.Value = DBNull.Value; }
+                        SqlParameter num_2Param = command.Parameters.AddWithValue("@IORH_NUM_2", m.num_2);
+                        if (m.num_2 == null) { num_2Param.Value = DBNull.Value; }
+                        SqlParameter text_5Param = command.Parameters.AddWithValue("@IORH_TEXT_5", m.text_5);
+                        if (m.text_5 == null) { text_5Param.Value = DBNull.Value; }
 
-                            //The parameterized query '(@IORH_IMPH_REFERENCE decimal(1,0),@IORH_ORDER_TYPE nvarchar(8),' expects the parameter '@IORH_VOLUME', which was not supplied.
-                            connection.Open();
-                            int result = command.ExecuteNonQuery();
+                        //The parameterized query '(@IORH_IMPH_REFERENCE decimal(1,0),@IORH_ORDER_TYPE nvarchar(8),' expects the parameter '@IORH_VOLUME', which was not supplied.
+                        connection.Open();
+                        int result = command.ExecuteNonQuery();
 
-                        }                    
+                    }
                 }
-            
- 
-               
+
+
+
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    SqlCommand checkifExist = new SqlCommand("SELECT COUNT(*) FROM dbo.IORA_ORDER_ACTIONPOINT WHERE (IORA_IMPH_REFERENCE = @IORA_IMPH_REFERENCE AND IORA_ACTION = @IORA_ACTION)", connection);
+                    SqlCommand checkifExist = new SqlCommand("SELECT COUNT(*) FROM dbo.IORA_ORDER_ACTIONPOINT WHERE (IORA_IMPH_REFERENCE = @IORA_IMPH_REFERENCE AND IORA_ACTION = @IORA_ACTION )", connection);
                     checkifExist.Parameters.AddWithValue("@IORA_IMPH_REFERENCE", m.reference);
-                    checkifExist.Parameters.AddWithValue("@IORA_ACTION", m.action);
+                    checkifExist.Parameters.AddWithValue("@IORA_ACTION", m.action == "R" ? "DELIVERY" : "PICKUP");
+
                     connection.Open();
                     int UserExist = (int)checkifExist.ExecuteScalar();
                     connection.Close();
@@ -148,43 +420,43 @@ namespace APIPTV.UTILS
                     if (UserExist > 0)
                     {
                         //Username exist log
-                        //query = "UPDATE  dbo.IORA_ORDER_ACTIONPOINT " +
-                        //  "SET " +
-                        //  "IORA_ACTION = @IORA_ACTION ," +
-                        //  "IORA_EXTID1 = @IORA_EXTID1 ," +
-                        //  "IORA_IS_ONETIME = @IORA_IS_ONETIME ," +
-                        //  "IORA_NAME = @IORA_NAME ," +
-                        //  "IORA_STREET = @IORA_STREET ," +
-                        //  "IORA_POSTCODE = @IORA_POSTCODE ," +
-                        //  "IORA_CITY = @IORA_CITY ," +
-                        //  "IORA_EARLIEST_DATETIME = @IORA_EARLIEST_DATETIME ," +
-                        //  "IORA_HANDLINGTIME_CLASS = @IORA_HANDLINGTIME_CLASS " +
-                        //  "WHERE IORA_IMPH_REFERENCE = @IORA_IMPH_REFERENCE";
+                        query = "UPDATE  dbo.IORA_ORDER_ACTIONPOINT " +
+                          "SET " +
+                          "IORA_ACTION = @IORA_ACTION ," +
+                          "IORA_EXTID1 = @IORA_EXTID1 ," +
+                          "IORA_IS_ONETIME = @IORA_IS_ONETIME ," +
+                          "IORA_NAME = @IORA_NAME ," +
+                          "IORA_STREET = @IORA_STREET ," +
+                          "IORA_POSTCODE = @IORA_POSTCODE ," +
+                          "IORA_CITY = @IORA_CITY ," +
+                          "IORA_EARLIEST_DATETIME = @IORA_EARLIEST_DATETIME ," +
+                          "IORA_HANDLINGTIME_CLASS = @IORA_HANDLINGTIME_CLASS " +
+                          "WHERE IORA_IMPH_REFERENCE = @IORA_IMPH_REFERENCE";
                     }
                     else
                     {
                         connection.Open();
 
-                        query = "INSERT INTO dbo.IORA_ORDER_ACTIONPOINT(IORA_IMPH_REFERENCE, IORA_ACTION, IORA_EXTID1,  IORA_IS_ONETIME,  IORA_EARLIEST_DATETIME,  IORA_LATEST_DATETIME)"+
+                        query = "INSERT INTO dbo.IORA_ORDER_ACTIONPOINT(IORA_IMPH_REFERENCE, IORA_ACTION, IORA_EXTID1,  IORA_IS_ONETIME,  IORA_EARLIEST_DATETIME,  IORA_LATEST_DATETIME)" +
                      "VALUES (@IORA_IMPH_REFERENCE,@IORA_ACTION,@IORA_EXTID1,@IORA_IS_ONETIME,  @IORA_EARLIEST_DATETIME,@IORA_LATEST_DATETIME )";
 
-                            using (SqlCommand command = new SqlCommand(query, connection))
-                            {
-                                command.Parameters.AddWithValue("@IORA_IMPH_REFERENCE", m.reference);
-                                command.Parameters.AddWithValue("@IORA_ACTION", m.action  == "R" ? "DELIVERY" : "PICKUP");
-                                command.Parameters.AddWithValue("@IORA_EXTID1", m.extid1);
-                                command.Parameters.AddWithValue("@IORA_IS_ONETIME", m.onetime1);                          
-                                command.Parameters.AddWithValue("@IORA_EARLIEST_DATETIME", m.earliest_datetime);
-                                command.Parameters.AddWithValue("@IORA_LATEST_DATETIME", m.latest_datetime);
-                         
-                                SqlParameter serviceperiodeParam = command.Parameters.AddWithValue("@IORA_SERVICEPERIODEXTERNAL", m.serviceperiode);
-                                if (m.serviceperiode == null) { serviceperiodeParam.Value = DBNull.Value; }
+                        using (SqlCommand command = new SqlCommand(query, connection))
+                        {
+                            command.Parameters.AddWithValue("@IORA_IMPH_REFERENCE", m.reference);
+                            command.Parameters.AddWithValue("@IORA_ACTION", m.action == "REP" ? "DELIVERY" : "PICKUP");
+                            command.Parameters.AddWithValue("@IORA_EXTID1", m.extid1);
+                            command.Parameters.AddWithValue("@IORA_IS_ONETIME", 0);
+                            command.Parameters.AddWithValue("@IORA_EARLIEST_DATETIME", m.earliest_datetime);
+                            command.Parameters.AddWithValue("@IORA_LATEST_DATETIME", m.latest_datetime);
 
-                                //The parameterized query '(@IORA_IMPH_REFERENCE decimal(1,0),@IORA_ACTION nvarchar(8),@IOR' expects the parameter '@IORA_SERVICEPERIODEXTERNAL', which was not supplied.
-                               
-                                int result = command.ExecuteNonQuery();
-                            }
-                         
+                            SqlParameter serviceperiodeParam = command.Parameters.AddWithValue("@IORA_SERVICEPERIODEXTERNAL", m.serviceperiode);
+                            if (m.serviceperiode == null) { serviceperiodeParam.Value = DBNull.Value; }
+
+                            //The parameterized query '(@IORA_IMPH_REFERENCE decimal(1,0),@IORA_ACTION nvarchar(8),@IOR' expects the parameter '@IORA_SERVICEPERIODEXTERNAL', which was not supplied.
+
+                            int result = command.ExecuteNonQuery();
+                        }
+
 
                         query2 = "INSERT INTO dbo.IORA_ORDER_ACTIONPOINT (IORA_IMPH_REFERENCE, IORA_ACTION, IORA_EXTID1,  IORA_IS_ONETIME, IORA_NAME, IORA_STREET, IORA_COUNTRY, IORA_POSTCODE, IORA_CITY,  IORA_EARLIEST_DATETIME,  IORA_LATEST_DATETIME, IORA_HANDLINGTIME_CLASS, IORA_SERVICEPERIODEXTERNAL)  " +
               "VALUES (@IORA_IMPH_REFERENCE,@IORA_ACTION,@IORA_EXTID1,@IORA_IS_ONETIME,@IORA_NAME,@IORA_STREET,@IORA_COUNTRY,@IORA_POSTCODE,@IORA_CITY,@IORA_EARLIEST_DATETIME,@IORA_LATEST_DATETIME,@IORA_HANDLINGTIME_CLASS,@IORA_SERVICEPERIODEXTERNAL)";
@@ -194,9 +466,9 @@ namespace APIPTV.UTILS
                         using (SqlCommand command = new SqlCommand(query2, connection))
                         {
                             command.Parameters.AddWithValue("@IORA_IMPH_REFERENCE", m.reference);
-                            command.Parameters.AddWithValue("@IORA_ACTION", m.action == "R" ? "PICKUP" : "DELIVERY");
-                            command.Parameters.AddWithValue("@IORA_EXTID1", m.extid1);
-                            command.Parameters.AddWithValue("@IORA_IS_ONETIME", m.onetime1);
+                            command.Parameters.AddWithValue("@IORA_ACTION", m.action == "REP" ? "PICKUP" : "DELIVERY");
+                            command.Parameters.AddWithValue("@IORA_EXTID1", m.extid2);
+                            command.Parameters.AddWithValue("@IORA_IS_ONETIME", 1);
                             command.Parameters.AddWithValue("@IORA_NAME", m.name);
                             command.Parameters.AddWithValue("@IORA_STREET", m.street);
                             command.Parameters.AddWithValue("@IORA_COUNTRY", m.country);
@@ -209,18 +481,18 @@ namespace APIPTV.UTILS
                             if (m.serviceperiode == null) { serviceperiodeParam.Value = DBNull.Value; }
 
                             //The parameterized query '(@IORA_IMPH_REFERENCE decimal(1,0),@IORA_ACTION nvarchar(8),@IOR' expects the parameter '@IORA_SERVICEPERIODEXTERNAL', which was not supplied.
-                            
 
-                               
+
+
                             int result = command.ExecuteNonQuery();
                         }
 
 
                     }
-                 
-                    
+
+
                 }
-         
+
 
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
@@ -252,53 +524,79 @@ namespace APIPTV.UTILS
                     "IAPO_UNTIL_WEEKDAY  ,IAPO_FROM, IAPO_UNTIL) " +
                     "VALUES (@IAPO_IORA_IMPH_REFERENCE,@IAPO_IORA_ACTION,@IAPO_SEQU_NUMBER,@IAPO_FROM_WEEKDAY,@IAPO_UNTIL_WEEKDAY,@IAPO_FROM,@IAPO_UNTIL)";
                     }
-                        using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        SqlParameter referenceParam = command.Parameters.AddWithValue("@IAPO_IORA_IMPH_REFERENCE", m.reference);//clé primaire
+                        if (m.reference == null)
                         {
-                            SqlParameter referenceParam = command.Parameters.AddWithValue("@IAPO_IORA_IMPH_REFERENCE", m.reference );//clé primaire
-                            if (m.reference == null)
-                            {
-                                referenceParam.Value = DBNull.Value;
-                            }
-                            SqlParameter actionParam = command.Parameters.AddWithValue("@IAPO_IORA_ACTION", m.action == "R" ? "PICKUP" : "DELIVERY");
-                            if (m.action == null)
-                            {
-                                actionParam.Value = DBNull.Value;
-                            }
-                            SqlParameter Seq_NumberParam = command.Parameters.AddWithValue("@IAPO_SEQU_NUMBER", m.Seq_Number);
-                            if (m.Seq_Number == null)
-                            {
-                                Seq_NumberParam.Value = DBNull.Value;
-                            }
-                            command.Parameters.AddWithValue("@IAPO_FROM_WEEKDAY", "SAT"); //m.from_weekday ( soit nul soit un jour de la semaine en EN (SAT,FRI etc ...")
-                            command.Parameters.AddWithValue("@IAPO_UNTIL_WEEKDAY", "FRI");//m.until_weekday ( soit nul soit un jour de la semaine en EN (SAT,FRI etc ...")
-                            SqlParameter fromParam = command.Parameters.AddWithValue("@IAPO_FROM", Convert.ToString(m.from));
-                            if (m.from == null)
-                            {
-                                fromParam.Value = DBNull.Value;
-                            }
-                            SqlParameter untilParam = command.Parameters.AddWithValue("@IAPO_UNTIL", Convert.ToString(m.until));
-                            if (m.until == null)
-                            {
-                                untilParam.Value = DBNull.Value;
-                            }
+                            referenceParam.Value = DBNull.Value;
+                        }
+                        SqlParameter actionParam = command.Parameters.AddWithValue("@IAPO_IORA_ACTION", m.action == "REP" ? "PICKUP" : "DELIVERY");
+                        if (m.action == null)
+                        {
+                            actionParam.Value = DBNull.Value;
+                        }
+                        SqlParameter Seq_NumberParam = command.Parameters.AddWithValue("@IAPO_SEQU_NUMBER", m.Seq_Number);
+                        if (m.Seq_Number == null)
+                        {
+                            Seq_NumberParam.Value = DBNull.Value;
+                        }
+                        command.Parameters.AddWithValue("@IAPO_FROM_WEEKDAY", m.from_weekday); //m.from_weekday ( soit nul soit un jour de la semaine en EN (SAT,FRI etc ...")
+                        command.Parameters.AddWithValue("@IAPO_UNTIL_WEEKDAY", m.until_weekday);//m.until_weekday ( soit nul soit un jour de la semaine en EN (SAT,FRI etc ...")
+                        SqlParameter fromParam = command.Parameters.AddWithValue("@IAPO_FROM", Convert.ToString(m.from));
+                        if (m.from == null)
+                        {
+                            fromParam.Value = DBNull.Value;
+                        }
+                        SqlParameter untilParam = command.Parameters.AddWithValue("@IAPO_UNTIL", Convert.ToString(m.until));
+                        if (m.until == null)
+                        {
+                            untilParam.Value = DBNull.Value;
+                        }
 
                         connection.Open();
-                            int result = command.ExecuteNonQuery();
+                        int result = command.ExecuteNonQuery();
 
                     }
                 }
-                
+
             }
         }
 
-        public static Retour GetData(int codAgence)
+        internal static void UpdateRetreivedData(List<string> references)
         {
-            Retour r = new Retour();
+           
+
+           var query = string.Format("UPDATE  dbo.EXPH_EXPORT_HEADER " +
+                           "SET " +
+                           "EXPH_PROCESS_CODE = 50 " +
+
+                           "WHERE EXPH_REFERENCE IN ({0})", string.Join(",",references));
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+
+                   
+                    int result = command.ExecuteNonQuery();
+
+                }
+                connection.Close();
+            }
+            
+        }
+
+        public static List<Retour> GetData(int codAgence, out List<string> references)
+        {
+            List<Retour> listretour = new List<Retour>();
             // throw new NotImplementedException();
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
 
-                string query_ = "SELECT EXPH_REFERENCE ,ETPT_EXTID1 ,ETRE_NAME,ETPA_ACTION,ETPA_ORDER_EXTID1 ,ETPA_START_SERVICE_TIME ,ETPA_END_SERVICE_TIME , ETPA_ETPS_TOURPOINT_SEQUENCE from EXPH_EXPORT_HEADER,ETPT_TOUR_HEADER,ETRE_TOUR_RESOURCE, ETPA_TOUR_ACTIONPOINT where ETPT_EXPH_REFERENCE = EXPH_REFERENCE and ETRE_TOUR_RESOURCE.ETRE_TYPE = 'DRIVER'and ETRE_TOUR_RESOURCE.ETRE_EXPH_REFERENCE = EXPH_REFERENCE and ETPA_ETPS_EXPH_REFERENCE = EXPH_REFERENCE and SUBSTRING(ETPT_EXTID1,4,2) = '@codAgence'   and ETRE_EXTID1 <> 'DILO'and EXPH_PROCESS_CODE = 20 order by ETPT_EXPH_REFERENCE, ETPA_ETPS_TOURPOINT_SEQUENCE ;";
+                //string query_ = "SELECT EXPH_REFERENCE ,ETPT_EXTID1 ,ETRE_NAME,ETPA_ACTION,ETPA_ORDER_EXTID1 ,ETPA_START_SERVICE_TIME ,ETPA_END_SERVICE_TIME , ETPA_ETPS_TOURPOINT_SEQUENCE from EXPH_EXPORT_HEADER,ETPT_TOUR_HEADER,ETRE_TOUR_RESOURCE, ETPA_TOUR_ACTIONPOINT where ETPT_EXPH_REFERENCE = EXPH_REFERENCE and ETRE_TOUR_RESOURCE.ETRE_TYPE = 'DRIVER'and ETRE_TOUR_RESOURCE.ETRE_EXPH_REFERENCE = EXPH_REFERENCE and ETPA_ETPS_EXPH_REFERENCE = EXPH_REFERENCE and SUBSTRING(ETPT_EXTID1,4,2) = 33   and ETRE_EXTID1 <> 'DILO'and EXPH_PROCESS_CODE = 50   and  EXPH_REFERENCE ='359886' and ETPA_ORDER_EXTID1='28336-201107' and ETPA_ACTION = 'Delivery'   order by ETPT_EXPH_REFERENCE, ETPA_ETPS_TOURPOINT_SEQUENCE  ;";
+               string query_ = "SELECT EXPH_REFERENCE ,ETPT_EXTID1 ,ETRE_NAME,ETPA_ACTION,ETPA_ORDER_EXTID1 ,ETPA_START_SERVICE_TIME ,ETPA_END_SERVICE_TIME , ETPA_ETPS_TOURPOINT_SEQUENCE from EXPH_EXPORT_HEADER,ETPT_TOUR_HEADER,ETRE_TOUR_RESOURCE, ETPA_TOUR_ACTIONPOINT where ETPT_EXPH_REFERENCE = EXPH_REFERENCE and ETRE_TOUR_RESOURCE.ETRE_TYPE = 'DRIVER'and ETRE_TOUR_RESOURCE.ETRE_EXPH_REFERENCE = EXPH_REFERENCE and ETPA_ETPS_EXPH_REFERENCE = EXPH_REFERENCE and SUBSTRING(ETPT_EXTID1,4,2) = @codAgence   and ETRE_EXTID1 <> 'DILO'and EXPH_PROCESS_CODE = 20   order by ETPT_EXPH_REFERENCE, ETPA_ETPS_TOURPOINT_SEQUENCE  ;";
 
 
                 SqlCommand checkifExist = new SqlCommand(query_, connection);
@@ -308,59 +606,147 @@ namespace APIPTV.UTILS
 
                 using (SqlDataReader reader = checkifExist.ExecuteReader())
                 {
-                    if (reader.Read())
-                    {
 
-                    // var DareStartService = reader["ETPA_START_SERVICE_TIME"].ToString();
-                    var DateStartService = "2019-01-03T16:12:54+01:00";
-                    // var DateEndService = reader["ETPA_START_SERVICE_TIME"].ToString();
-                    var DateEndService = "2019-01-03T16:12:54+01:00";
+                     references = new List<string>();
+                    foreach (DbDataRecord s in reader)
+                        {
+
+                            Retour r = new Retour();
+
+                        references.Add(s["EXPH_REFERENCE"].ToString());
+                       var DateStartService = s["ETPA_START_SERVICE_TIME"].ToString();
+                  // var DateStartService = "2019-01-03T16:12:54+01:00";
+                     var DateEndService = s["ETPA_END_SERVICE_TIME"].ToString();
+                        // var DateEndService = "2019-01-03T16:12:54+01:00";
 
 
-                    //Date Arrivé client
-                    var heure_Arrive_clt = int.Parse(string.Concat(DateStartService.Substring(11, 2), DateStartService.Substring(14, 2)));
-                    if (heure_Arrive_clt < 1000 || heure_Arrive_clt < 2300)
-                    {
-                        heure_Arrive_clt = 0900;
-                    }
+                        //Date Arrivé client
+                        var DateStartServiceDateTime = Convert.ToDateTime(DateStartService);
+                        var DateStartServiceHours = DateStartServiceDateTime.Hour;
+                        var DateStartServiceMinutes = DateStartServiceDateTime.Minute;
+                        DateTime dateServiceHoursMinutes = new DateTime(2020,8,1, DateStartServiceHours, DateStartServiceMinutes,0);
 
-                    //Date Debut Commande
 
-                    var heure_Deb_cmd = int.Parse(string.Concat(DateEndService.Substring(11, 2), "00"));
-                    if (heure_Deb_cmd < 1000 || heure_Deb_cmd < 2300)
+                        
+                        var DateEndServiceDateTime = Convert.ToDateTime(DateEndService);
+                        var DateEndServiceHours = DateEndServiceDateTime.Hour;
+                        var DateEndServiceMinutes = DateEndServiceDateTime.Minute;
+                        DateTime dateEndServiceHoursMinutes = new DateTime(2020, 8, 1, DateEndServiceHours, DateEndServiceMinutes, 0);
+
+                        var DateStartServiceDateTime_ = Convert.ToDateTime(DateStartService);
+                        DateTime dateStartServiceHoursWithZeroMinutes = new DateTime(2020, 8, 1, DateStartServiceHours, 0, 0);
+
+
+                        DateTime midNightHoursMinutes = new DateTime(2020, 8, 1, 0, 0, 0);
+                        DateTime twentyThreeHoursMinutes = new DateTime(2020, 8, 1, 23, 0, 0);
+
+                        int resultCompareToMidNightHoursMinutes = DateTime.Compare(dateServiceHoursMinutes, midNightHoursMinutes);
+                        int resultCompareToTwentyThreeHoursMinute = DateTime.Compare(dateServiceHoursMinutes, twentyThreeHoursMinutes);
+
+                        int resultCompareDateEndServiceHoursAndMinutesToMidNightHoursMinutes = DateTime.Compare(dateEndServiceHoursMinutes, midNightHoursMinutes);
+                        int resultCompareDateEndServiceHoursAndMinutesToTwentyThreeHoursMinute = DateTime.Compare(dateEndServiceHoursMinutes, twentyThreeHoursMinutes);
+
+                        int resultCompareDateStartServiceHoursWithZeroMinutesToMidNightHoursMinutes = DateTime.Compare(dateStartServiceHoursWithZeroMinutes, midNightHoursMinutes);
+                        int resultCompareDateStartServiceHoursWithZeroMinutesToTwentyThreeHoursMinute = DateTime.Compare(dateStartServiceHoursWithZeroMinutes, twentyThreeHoursMinutes);
+
+
+                        if (resultCompareToMidNightHoursMinutes <0 || resultCompareToTwentyThreeHoursMinute > 0)
+                        {
+                            DateStartServiceDateTime = new DateTime( DateStartServiceDateTime.Year,DateStartServiceDateTime.Month,DateStartServiceDateTime.Day,  09, 00,00,00, DateStartServiceDateTime.Kind);
+
+                        }
+
+                        /*   ANCIEN CODE
+                         *   var heure_Arrive_clt = int.Parse(string.Concat(DateStartService.Substring(11, 2), DateStartService.Substring(14, 2)));
+                        if (heure_Arrive_clt < 0000 || heure_Arrive_clt > 2300)
+                        {
+                            heure_Arrive_clt = 0900;
+                        }
+
+                        */
+                        //Date Debut Commande
+
+                        if (resultCompareDateStartServiceHoursWithZeroMinutesToMidNightHoursMinutes < 0 || resultCompareDateStartServiceHoursWithZeroMinutesToTwentyThreeHoursMinute > 0)
+                        {
+                            DateStartServiceDateTime_ = new DateTime(DateStartServiceDateTime_.Year, DateStartServiceDateTime_.Month, DateStartServiceDateTime_.Day, 09, 00, 00, 00, DateStartServiceDateTime.Kind);
+
+                        }
+                        /*
+                        var heure_Deb_cmd = int.Parse(string.Concat(DateStartService.Substring(11, 2), "00"));
+                    if (heure_Deb_cmd < 0000 || heure_Deb_cmd > 2300)
                     {
                         heure_Deb_cmd = 0900;
                     }
+                    */
 
 
-                    //Calcul du Heure_depart_Clt
+                        if (resultCompareDateEndServiceHoursAndMinutesToMidNightHoursMinutes < 0 || resultCompareDateEndServiceHoursAndMinutesToTwentyThreeHoursMinute > 0)
+                        {
+                            DateEndServiceDateTime = new DateTime(DateEndServiceDateTime.Year, DateEndServiceDateTime.Month, DateEndServiceDateTime.Day, 09, 00, 00, 00, DateEndServiceDateTime.Kind);
 
-                    // var DateDebut = reader["ETPA_END_SERVICE_TIME"].ToString();
-                  
+                        }
+                        /*
+                        var heure_dep_clt = int.Parse(string.Concat(DateEndService.Substring(11, 2), DateEndService.Substring(14, 2)));
+                        if (heure_dep_clt < 0000 || heure_dep_clt > 2300)
+                        {
+                            heure_dep_clt = 0900;
+                        }
+                        */
 
-                    var heure_dep_clt = int.Parse(string.Concat(DateStartService.Substring(11, 2), DateStartService.Substring(14, 2)));
-                    if (heure_dep_clt > 1000 || heure_dep_clt < 2300)
-                    {
-                        heure_dep_clt = 0900;
-                    }
+                        //Console.WriteLine(String.Format("{0}", reader["id"]));
+                         r.IdCommande = s["ETPA_ORDER_EXTID1"].ToString();
+                       // r.IdCommande = "9055588 - 405529";
+                        r.IdCommande = r.IdCommande.Substring(0,r.IdCommande.IndexOf("-"));
+                        r.CodeAgence =( s["ETPT_EXTID1"].ToString()).Substring(3,2);
+                        r.CodeDirection = s["ETRE_NAME"].ToString();
+                        r.Action = s["ETPA_ACTION"].ToString();
+                        r.Ordre = int.Parse(s["ETPA_ETPS_TOURPOINT_SEQUENCE"].ToString());
 
-                    //Console.WriteLine(String.Format("{0}", reader["id"]));
-                    r.IdCommande = reader["ETPA_ORDER_EXTID1"].ToString();  
-                        r.CodeAgence = reader["ETPT_EXTID1"].ToString();
-                        r.CodeDirection = reader["ETRE_NAME"].ToString();
-                        r.Action = reader["ETPA_ACTION"].ToString();
-                        r.Ordre = reader["Ordre"].ToString();
-                        if(DateStartService != null)
-                        r.DateHeureDebutCommande = string.Concat(DateStartService.Substring(0,11), CastFormatDateHours(heure_Deb_cmd));  //2019-01-03T16:12:54+01:00
-                        r.DateHeureArriveeClient = string.Concat(DateStartService.Substring(0, 11), CastFormatDateHours(heure_Arrive_clt)); // reader["ETPA_START_SERVICE_TIME"].ToString();
-                    r.DateHeureDepartClient = string.Concat(DateEndService.Substring(0, 11), CastFormatDateHours(heure_dep_clt));  // reader["ETPA_END_SERVICE_TIME"].ToString(); 
 
-                    }
+                        r.DateHeureDebutCommande = (new DateTime(
+                                                                    DateStartServiceDateTime_.Year,
+                                                                    DateStartServiceDateTime_.Month,
+                                                                    DateStartServiceDateTime_.Day,
+                                                                    DateStartServiceDateTime_.Hour,
+                                                                    00,
+                                                                    00,
+                                                                    00,
+                                                                   DateStartServiceDateTime.Kind)).ToString("yyyy-MM-ddTHH:mm:ss").Substring(0, 19);
+                        r.DateHeureArriveeClient = (new DateTime(
+                                                                    DateStartServiceDateTime.Year,
+                                                                    DateStartServiceDateTime.Month,
+                                                                    DateStartServiceDateTime.Day,
+                                                                    DateStartServiceDateTime.Hour,
+                                                                    DateStartServiceDateTime.Minute,
+                                                                    00,
+                                                                    00,
+                                                                    DateStartServiceDateTime.Kind)).ToString("yyyy-MM-ddTHH:mm:ss").Substring(0,19);
+                        r.DateHeureDepartClient = (new DateTime(
+                                                                   DateEndServiceDateTime.Year,
+                                                                   DateEndServiceDateTime.Month,
+                                                               DateEndServiceDateTime.Day,
+                                                                   DateEndServiceDateTime.Hour,
+                                                                   DateEndServiceDateTime.Minute,
+                                                                   00,
+                                                                   00,
+                                                                   DateEndServiceDateTime.Kind)).ToString("yyyy-MM-ddTHH:mm:ss").Substring(0, 19);
+                        // r.DateHeureDebutCommande = string.Concat(DateStartService.Substring(0,11), CastFormatDateHours(heure_Deb_cmd));  //2019-01-03T16:12:54+01:00
+                        // r.DateHeureArriveeClient = string.Concat(DateStartService.Substring(0, 11), CastFormatDateHours(heure_Arrive_clt)); // reader["ETPA_START_SERVICE_TIME"].ToString();
+                        // r.DateHeureDepartClient = string.Concat(DateEndService.Substring(0, 11), CastFormatDateHours(heure_dep_clt));  // reader["ETPA_END_SERVICE_TIME"].ToString(); 
+                        listretour.Add(r);  
+                        }
+                    
+
+                
                 }
             }
+           
 
-            return r;
+            return listretour;
+          //  logger.Info(string.Format("{0} ", r));
         }
+
+      
 
         public static string CastFormatDateHours(int a)
         {
@@ -387,6 +773,8 @@ namespace APIPTV.UTILS
                 double? totalpoids = FluxptvList[i].CommandeTotaux.TotalPoids;
                 double? PM =0;
                 string TypMarch = "A";
+                if (FluxptvList[i].Prestation!=null)
+                { 
                 if (FluxptvList[i].Prestation.Code == "LM")
                     TypMarch = "M";
                 else
@@ -420,6 +808,7 @@ namespace APIPTV.UTILS
                     }
 
                 }
+                }
 
                 //calcul Vehiclerequirements/code_territoire_mappe
 
@@ -436,7 +825,7 @@ namespace APIPTV.UTILS
 
                 //calcul de libel1
                 var libel = "";
-                if (FluxptvList[i].Trafic.Code == "R")
+                if (FluxptvList[i].Trafic.Code == "REP")
                     libel = "PICKUP";
                 else
                     libel = "DELIVERY";
@@ -444,11 +833,11 @@ namespace APIPTV.UTILS
                 //calcul du taskfields/agence
                 var agence = "";
                 if (FluxptvList[i].Agence.CodeNumerique.Length==2)
-                 agence = string.Concat("VIR", (FluxptvList[i].Agence.CodeNumerique).Substring(0,2));
+                 agence = string.Concat("VIR", (FluxptvList[i].Agence.CodeNumerique).Substring(0,2), "_MRAOD");
 
 
                 //calcul Depot/Extid1
-                var Depot = string.Concat("DEPOT", FluxptvList[i].Agence.CodeNumerique);
+                var Depot = string.Concat("DEPOT", FluxptvList[i].Agence.CodeNumerique,"_MRAOD");
                 if ((FluxptvList[i].SpecifiqueChaine3!="00" )&&(FluxptvList[i].SpecifiqueChaine3 != "11") &&(FluxptvList[i].SpecifiqueChaine3 != "91"))
                     Depot = string.Concat(Depot, FluxptvList[i].SpecifiqueChaine3);
 
@@ -463,13 +852,16 @@ namespace APIPTV.UTILS
                 if (FluxptvList[i].CommandeTotaux.TotalPoids < 50)
                     ClassPoids = 1;
 
-                    
-                ListModeleBasePTV[i].reference =  FluxptvList[i].IdCommandeEntete + FluxptvList[i].NumeroRecepisse;
-                //Context:champs en dur     Random rnd2 = new Random();    Math.Round(new decimal(rnd2.Next(1, 999999999))) +
+
+                // ListModeleBasePTV[i].reference =  FluxptvList[i].IdCommandeEntete  ;
+
+                //Context:champs en dur  
+               // Random rnd2 = new Random();
+                ListModeleBasePTV[i].reference = FluxptvList[i].IdCommandeEntete;
                 ListModeleBasePTV[i].Context = "STANDARD";
 
                 ListModeleBasePTV[i].object_type = "ORDER";
-                ListModeleBasePTV[i].extid = Convert.ToString(FluxptvList[i].IdCommandeEntete);
+                ListModeleBasePTV[i].extid = string.Concat(FluxptvList[i].IdCommandeEntete,"-", FluxptvList[i].DateDebutLivraison.ToString("yyMMdd"));
                 ListModeleBasePTV[i].action_code = "UPDATE";
                 ListModeleBasePTV[i].process_code = Convert.ToDecimal("20");
                 ListModeleBasePTV[i].creation_time = (DateTime.Now).ToString("yyyyMMddHHmmss");
@@ -480,7 +872,15 @@ namespace APIPTV.UTILS
                 //Total poids
                 ListModeleBasePTV[i].weight = FluxptvList[i].CommandeTotaux.TotalPoids;
                 //Volume
-                ListModeleBasePTV[i].volume = FluxptvList[i].CommandeTotaux.TotalVolume;
+                if (FluxptvList[i].CommandeTotaux.TotalVolume==null)
+                {
+                    ListModeleBasePTV[i].volume = 0;
+                }
+                else
+                { 
+                    ListModeleBasePTV[i].volume = FluxptvList[i].CommandeTotaux.TotalVolume;
+                }
+               
                 //Total quantité
                 ListModeleBasePTV[i].quantity_1 = FluxptvList[i].CommandeTotaux.TotalColis;
                 ListModeleBasePTV[i].vehicleRequirements = cod_territoire_mappe;
@@ -492,7 +892,6 @@ namespace APIPTV.UTILS
                 ListModeleBasePTV[i].num_1 = FluxptvList[i].SpecifiqueChaine2;
                 //num_2=CA
                 ListModeleBasePTV[i].num_2 = FluxptvList[i].CommandeTotauxMontant.ChiffreAffaire;
-
                 //text_5=numero recipissé
                 ListModeleBasePTV[i].text_5 = FluxptvList[i].NumeroRecepisse;
                 ListModeleBasePTV[i].action = FluxptvList[i].Trafic.Code;
@@ -509,6 +908,7 @@ namespace APIPTV.UTILS
                 //Pays en dur
                 ListModeleBasePTV[i].country = "FRA";
                 ListModeleBasePTV[i].extid1 = Depot;
+                ListModeleBasePTV[i].extid2 = string.Concat(FluxptvList[i].IdCommandeEntete,"-", FluxptvList[i].DateDebutLivraison.ToString("yyMMdd")) ;
                 //Code postal de destinataire
                 ListModeleBasePTV[i].postcode = FluxptvList[i].LocaliteDestinataire.CodePostal;
                 //ville de destinataire
@@ -517,13 +917,13 @@ namespace APIPTV.UTILS
                 ListModeleBasePTV[i].handlingtime_class = ClassPoids;
                 ListModeleBasePTV[i].serviceperiode = null;
                 //date debut rdv
-                ListModeleBasePTV[i].from =FluxptvList[i].THeureDebutRDV?.ToString("mmss");
+                ListModeleBasePTV[i].from =FluxptvList[i].THeureDebutRDV?.TimeOfDay.ToString().Substring(0,5).Replace(":","");
                 //date fin rdv
-                ListModeleBasePTV[i].until =FluxptvList[i].THeureFinRDV?.ToString("mmss");  
+                ListModeleBasePTV[i].until =FluxptvList[i].THeureFinRDV?.TimeOfDay.ToString().Substring(0, 5).Replace(":", "");  
                 //DateLivraison format : AAAAMMJJ0000
-                ListModeleBasePTV[i].until_weekday = FluxptvList[i].DateDebutLivraison.ToString("ddd").Replace(".", "");  
+                ListModeleBasePTV[i].until_weekday = FluxptvList[i].DateDebutLivraison.DayOfWeek.ToString().Substring(0,3);  
                 //DateLivraison format : AAAAMMJJ0000
-                ListModeleBasePTV[i].from_weekday = FluxptvList[i].DateDebutLivraison.ToString("ddd").Replace(".","");
+                ListModeleBasePTV[i].from_weekday = FluxptvList[i].DateDebutLivraison.DayOfWeek.ToString().Substring(0, 3);
                 //1 En dur
                 ListModeleBasePTV[i].Seq_Number = 1;
 

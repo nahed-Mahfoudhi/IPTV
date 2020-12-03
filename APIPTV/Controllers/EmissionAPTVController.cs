@@ -4,6 +4,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using APIPTV.Filters;
@@ -27,13 +28,28 @@ namespace APIPTV.Controllers
 
         // GET: api/EmissionAPTV/5
         // GET api/values/5
-        public string Get(int codeAgence)
+        public HttpResponseMessage Get(int codeAgence)
         {
             //157816 VIR96 - 169867    T01 Pickup  960008703 - 181231    2019 - 01 - 03T16: 12:54 + 01:00   2019 - 01 - 03T16: 12:54 + 01:00   0
-          Retour r = UTILS.EmissionFluxPTV.GetData(codeAgence);
+            List<string> references;
+         List<Retour> r = UTILS.EmissionFluxPTV.GetData(codeAgence, out references);
+            if (r.Count > 0)
+            {
+                UTILS.EmissionFluxPTV.UpdateRetreivedData(references);
+            }
             JsonSerializer ser = new JsonSerializer();
             string jsonresp = JsonConvert.SerializeObject(r);
-            return jsonresp;
+            logger.Info(string.Format("{0} => {1}", "JSON RETOUR TO AKANEA", jsonresp));
+
+
+          
+
+            var response = Request.CreateResponse(HttpStatusCode.OK);
+            response.Content = new StringContent(jsonresp, Encoding.UTF8, "application/json");
+            return response;
+
+
+          //  return jsonresp;
         }
 
         // POST: api/EmissionAPTV
@@ -54,8 +70,6 @@ namespace APIPTV.Controllers
                     var FluxRdvEmission = await UTILS.EmissionFluxPTV.TraitFluxSmartour(FluxAOPT);
 
                     
-              
-
                       
                     try
                     {

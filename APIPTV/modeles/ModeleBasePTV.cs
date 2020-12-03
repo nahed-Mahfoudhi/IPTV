@@ -17,7 +17,7 @@ namespace APIPTV.modeles
             public string extid { get; set; }
 
             public string extid1 { get; set; }
-
+            public string extid2 { get; set; }
             public string action_code { get; set; }
 
             public decimal process_code { get; set; }
