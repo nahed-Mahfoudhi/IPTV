@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 using static APIPTV.Models.FluxAOptimiser;
 
 namespace APIPTV.UTILS
@@ -14,8 +15,9 @@ namespace APIPTV.UTILS
     {
 
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        public static string _connectionString = @"Server=SRVSMARTOUR\PTVLO;Database=TRANSFERDB_TEST;User Id=sa;Password=SmarTour4u$;";
-   
+        public static string _connectionString = WebConfigurationManager.AppSettings["connectionString"];
+
+
         public static void InsertOrUpdate(List<ModeleBasePTV> listModeleBasePTV)
         {
             decimal lastNumRow = 0;
