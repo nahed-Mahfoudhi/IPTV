@@ -20,39 +20,26 @@ namespace APIPTV.Controllers
     public class EmissionAPTVController : ApiController
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        // GET: api/EmissionAPTV
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
-        // GET: api/EmissionAPTV/5
-        // GET api/values/5
         public HttpResponseMessage Get(int codeAgence)
         {
             //157816 VIR96 - 169867    T01 Pickup  960008703 - 181231    2019 - 01 - 03T16: 12:54 + 01:00   2019 - 01 - 03T16: 12:54 + 01:00   0
             List<string> references;
-         List<Retour> r = UTILS.EmissionFluxPTV.GetData(codeAgence, out references);
+            List<Retour> r = UTILS.EmissionFluxPTV.GetData(codeAgence, out references);
             if (r.Count > 0)
             {
-                UTILS.EmissionFluxPTV.UpdateRetreivedData(references);
+               UTILS.EmissionFluxPTV.UpdateRetreivedData(references);
             }
             JsonSerializer ser = new JsonSerializer();
             string jsonresp = JsonConvert.SerializeObject(r);
             logger.Info(string.Format("{0} => {1}", "JSON RETOUR TO AKANEA", jsonresp));
 
-
-          
-
             var response = Request.CreateResponse(HttpStatusCode.OK);
             response.Content = new StringContent(jsonresp, Encoding.UTF8, "application/json");
             return response;
-
-
-          //  return jsonresp;
         }
 
-        // POST: api/EmissionAPTV
+
         [HttpPost]
         public async Task<IHttpActionResult> Post([FromBody]dynamic JsonPTV)
         {
@@ -60,22 +47,16 @@ namespace APIPTV.Controllers
             {
                 try
                 {
-                    logger.Error("==================================================First==================================");
+                    logger.Info("==================================================First==================================");
                     var FluxAOPT = JsonConvert.DeserializeObject<List<FluxPtv>>(JsonPTV.Root.ToString());
 
-                   
                     logger.Info(string.Format("{0} => {1}", "json mrod", JsonPTV.Root.ToString()));
-
-
                     var FluxRdvEmission = await UTILS.EmissionFluxPTV.TraitFluxSmartour(FluxAOPT);
-
-                    
                       
                     try
                     {
                         // mon code qui plante
                         UTILS.EmissionFluxPTV.InsertOrUpdate(FluxRdvEmission);
-                        logger.Error("NO EXCEPTION ====================================================================================");
                     }
                     catch (DbEntityValidationException e)
                     {
@@ -89,11 +70,9 @@ namespace APIPTV.Controllers
                         }
                     }
                 }
-            catch (Exception ex)
+           catch (Exception ex)
             {
                 logger.Error(ex.Message);
-                logger.Error("END WITH EXCEPTION ====================================================================================");
-
             }
 
             })).Start();
@@ -102,14 +81,5 @@ namespace APIPTV.Controllers
 
         }
 
-        // PUT: api/EmissionAPTV/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/EmissionAPTV/5
-        public void Delete(int id)
-        {
-        }
     }
 }
