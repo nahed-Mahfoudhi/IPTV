@@ -170,46 +170,16 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\EmissionAPTVController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="DAL\GenericRepository.cs" />
-    <Compile Include="modeles\UnitOfWork.cs" />
     <Compile Include="Filters\BasicAuthenticationAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="modeles\IAPO_ACTIONPOINT_OPENINGHOUR.cs">
-      <DependentUpon>modele1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="modeles\IMPH_IMPORT_HEADER.cs">
-      <DependentUpon>modele1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="modeles\IORA_ORDER_ACTIONPOINT.cs">
-      <DependentUpon>modele1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="modeles\IORH_ORDER_HEADER.cs">
-      <DependentUpon>modele1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="modeles\modele1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>modele1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="modeles\modele1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>modele1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="modeles\modele1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>modele1.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="modeles\FluxAOptimiser.cs" />
-    <Compile Include="modeles\ModeleBasePTV.cs" />
-    <Compile Include="modeles\RetourFluxOptimiser.cs" />
+    <Compile Include="Models\FluxAOptimiser.cs" />
+    <Compile Include="Models\ModeleBasePTV.cs" />
+    <Compile Include="Models\RetourFluxOptimiser.cs" />
     <Compile Include="Models\Retour.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UTILS\EmissionFluxPTV.cs" />
-    <Compile Include="UTILS\FluxRetourPTV.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -220,16 +190,6 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="modeles\modele1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>modele1.edmx</DependentUpon>
-      <LastGenOutput>modele1.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="modeles\modele1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>modele1.edmx</DependentUpon>
-      <LastGenOutput>modele1.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -251,13 +211,6 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <EntityDeploy Include="modeles\modele1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>modele1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="modeles\modele1.edmx.diagram">
-      <DependentUpon>modele1.edmx</DependentUpon>
-    </Content>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
