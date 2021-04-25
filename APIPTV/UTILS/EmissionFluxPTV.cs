@@ -438,9 +438,7 @@ namespace APIPTV.UTILS
                                                                    00,
                                                                    00,
                                                                    DateEndServiceDateTime.Kind)).ToString("yyyy-MM-ddTHH:mm:ss").Substring(0, 19);
-                        // r.DateHeureDebutCommande = string.Concat(DateStartService.Substring(0,11), CastFormatDateHours(heure_Deb_cmd));  //2019-01-03T16:12:54+01:00
-                        // r.DateHeureArriveeClient = string.Concat(DateStartService.Substring(0, 11), CastFormatDateHours(heure_Arrive_clt)); // reader["ETPA_START_SERVICE_TIME"].ToString();
-                        // r.DateHeureDepartClient = string.Concat(DateEndService.Substring(0, 11), CastFormatDateHours(heure_dep_clt));  // reader["ETPA_END_SERVICE_TIME"].ToString(); 
+
                         listretour.Add(r);  
                         }
                     
