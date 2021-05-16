@@ -35,7 +35,7 @@ namespace APIPTV.Controllers
          List<Retour> r = UTILS.EmissionFluxPTV.GetData(codeAgence, out references);
             if (r.Count > 0)
             {
-                UTILS.EmissionFluxPTV.UpdateRetreivedData(references);
+               UTILS.EmissionFluxPTV.UpdateRetreivedData(references);
             }
             JsonSerializer ser = new JsonSerializer();
             string jsonresp = JsonConvert.SerializeObject(r);
@@ -68,8 +68,6 @@ namespace APIPTV.Controllers
 
 
                     var FluxRdvEmission = await UTILS.EmissionFluxPTV.TraitFluxSmartour(FluxAOPT);
-
-                    
                       
                     try
                     {
@@ -89,7 +87,7 @@ namespace APIPTV.Controllers
                         }
                     }
                 }
-            catch (Exception ex)
+           catch (Exception ex)
             {
                 logger.Error(ex.Message);
                 logger.Error("END WITH EXCEPTION ====================================================================================");

@@ -59,6 +59,9 @@ namespace APIPTV.Models
 
             [JsonProperty("TotalVolume")]
             public double? TotalVolume { get; set; }
+
+            [JsonProperty("TotalTempsMontage")]
+            public int TotalTempsMontage { get; set; }
         }
 
         //Montant commande totaux
@@ -67,8 +70,7 @@ namespace APIPTV.Models
             [JsonProperty("ChiffreAffaire")]
             public double? ChiffreAffaire { get; set; }
 
-            [JsonProperty("TotalTempsMontage")]
-            public int TotalTempsMontage { get; set; }
+         
         }
 
         public class FluxPtv
@@ -138,7 +140,7 @@ namespace APIPTV.Models
             public CommandeTotauxMontant CommandeTotauxMontant { get; set; }
 
             [JsonProperty("SpecifiqueChaine2")]
-            public double? SpecifiqueChaine2 { get; set; }
+            public string SpecifiqueChaine2 { get; set; }
 
             [JsonProperty("SpecifiqueChaine3")]
             public string SpecifiqueChaine3 { get; set; }
